@@ -134,9 +134,12 @@ public final class TerminatorPlus implements Plugin {
         started = true;
         mcVersion = Bukkit.getServer().getMinecraftVersion();
         correctVersion = REQUIRED_VERSION.equals(mcVersion);
+        // Import before creating the native TOML file. This preserves the
+        // non-destructive rule while still allowing a first-run Paper config
+        // to become the initial NeoForge settings.
+        PaperImporter.run(Path.of("."), configDirectory);
         loadNativeConfig();
         MovementV2Settings.applyDefaultEnabledMigration(this);
-        PaperImporter.run(Path.of("."), configDirectory);
 
         manager = new BotManagerImpl();
         combatDirector = new CombatDirector();

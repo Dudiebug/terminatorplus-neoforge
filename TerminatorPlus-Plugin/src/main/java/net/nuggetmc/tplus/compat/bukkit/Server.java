@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.neoforge.common.NeoForge;
 import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 import net.nuggetmc.tplus.compat.bukkit.entity.EntityBridge;
@@ -32,10 +33,21 @@ public class Server {
     public Player getPlayer(String name) { return getOnlinePlayers().stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst().orElse(null); }
     public PluginManager getPluginManager() { return PLUGIN_MANAGER; }
     public double[] getTPS() { return new double[]{20,20,20}; }
-    public int getProfilePermissions(com.mojang.authlib.GameProfile profile) { return 4; }
+    public int getProfilePermissions(com.mojang.authlib.GameProfile profile) {
+        if (handle == null || profile == null) return 0;
+        return handle.getProfilePermissions(profile);
+    }
     public CommandSender getConsoleSender() { return new CommandSender() { public void sendMessage(String message) { getLogger().info(message); } public boolean isOp() { return true; } }; }
-    public boolean dispatchCommand(CommandSender sender, String command) { return false; }
-    public int getSpawnRadius() { return 0; }
+    public boolean dispatchCommand(CommandSender sender, String command) {
+        if (handle == null || command == null || command.isBlank()) return false;
+        String input = command.startsWith("/") ? command.substring(1) : command;
+        if (input.isBlank()) return false;
+        CommandSourceStack source = sender instanceof net.nuggetmc.tplus.command.NeoForgeCommandSender neo
+                ? neo.source()
+                : handle.createCommandSourceStack();
+        return handle.getCommands().performPrefixedCommand(source, input) > 0;
+    }
+    public int getSpawnRadius() { return handle == null ? 0 : handle.getSpawnRadius(); }
     public static final class PluginManager {
         private final java.util.concurrent.CopyOnWriteArrayList<Object> listeners = new java.util.concurrent.CopyOnWriteArrayList<>();
 

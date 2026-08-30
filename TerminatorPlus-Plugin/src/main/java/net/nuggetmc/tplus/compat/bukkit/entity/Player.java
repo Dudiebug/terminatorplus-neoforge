@@ -6,6 +6,7 @@ import net.nuggetmc.tplus.compat.bukkit.*;
 import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 import net.nuggetmc.tplus.compat.bukkit.inventory.*;
 import net.nuggetmc.tplus.compat.bukkit.event.inventory.InventoryView;
+import net.nuggetmc.tplus.NeoForgePermissions;
 
 public class Player extends HumanEntity implements CommandSender {
     protected final ServerPlayer player;
@@ -16,7 +17,12 @@ public class Player extends HumanEntity implements CommandSender {
     public PlayerInventory getInventory(){return new PlayerInventory(player.getInventory());} @Override public EntityEquipment getEquipment(){return new EntityEquipment(player);}
     public void sendMessage(String message){player.sendSystemMessage(Component.literal(message==null?"":message));} public void sendRichMessage(String message){sendMessage(strip(message));}
     private static String strip(String s){return s==null?"":s.replaceAll("<[^>]+>","");}
-    public boolean isOp(){return player.getServer()!=null&&player.getServer().getProfilePermissions(player.getGameProfile())>=4;} public boolean hasPermission(String node){return isOp();} public boolean hasPermission(int level){return player.hasPermissions(level);}
+    public boolean isOp(){return player.getServer()!=null&&player.getServer().getProfilePermissions(player.getGameProfile())>=4;}
+    public boolean hasPermission(String node){
+        if (node == null || node.isBlank()) return true;
+        return NeoForgePermissions.has(player, node);
+    }
+    public boolean hasPermission(int level){return player.hasPermissions(level);}
     public void setGameMode(GameMode mode){player.setGameMode(switch(mode){case CREATIVE->net.minecraft.world.level.GameType.CREATIVE;case ADVENTURE->net.minecraft.world.level.GameType.ADVENTURE;case SPECTATOR->net.minecraft.world.level.GameType.SPECTATOR;default->net.minecraft.world.level.GameType.SURVIVAL;});}
     public GameMode getGameMode(){return switch(player.gameMode.getGameModeForPlayer()){case CREATIVE->GameMode.CREATIVE;case ADVENTURE->GameMode.ADVENTURE;case SPECTATOR->GameMode.SPECTATOR;default->GameMode.SURVIVAL;};}
     public boolean isOnline(){return player.connection!=null;} public void openInventory(Inventory inventory){openInventory=new InventoryView(inventory,getInventory(),this);player.openMenu(new net.minecraft.world.SimpleMenuProvider((id,inv,p)->net.minecraft.world.inventory.ChestMenu.sixRows(id,inv),Component.literal(inventory.getTitle())));}

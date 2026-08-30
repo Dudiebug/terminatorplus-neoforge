@@ -37,7 +37,14 @@ public final class NeoForgePermissions {
 
     public static boolean has(ServerPlayer player, String node) {
         if (player == null) return false;
-        PermissionNode<Boolean> permission = ADMIN.getNodeName().equals(node) ? ADMIN : MANAGE;
+        PermissionNode<Boolean> permission;
+        if (MANAGE.getNodeName().equals(node) || (TerminatorPlus.MOD_ID + ".manage").equals(node)) {
+            permission = MANAGE;
+        } else if (ADMIN.getNodeName().equals(node) || (TerminatorPlus.MOD_ID + ".admin").equals(node)) {
+            permission = ADMIN;
+        } else {
+            return false;
+        }
         try {
             return PermissionAPI.getPermission(player, permission);
         } catch (RuntimeException ignored) {

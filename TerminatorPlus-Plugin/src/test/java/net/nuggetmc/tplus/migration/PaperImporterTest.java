@@ -38,6 +38,9 @@ class PaperImporterTest {
         assertNotNull(result.backup());
         assertTrue(Files.isDirectory(result.backup()));
         assertTrue(Files.isRegularFile(nativeData.resolve("imported-paper-config.yml")));
+        assertTrue(Files.isRegularFile(root.resolve("config/terminatorplus-server.toml")));
+        assertTrue(Files.readString(root.resolve("config/terminatorplus-server.toml"))
+                .contains("enabled = true"));
         assertEquals("native: true\n", Files.readString(nativeData.resolve("presets/duel.yml")));
         assertTrue(Files.isRegularFile(nativeData.resolve("ai/movement/brains/valid.json")));
         assertFalse(Files.exists(nativeData.resolve("ai/movement/brains/broken.json")));

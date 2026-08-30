@@ -5,8 +5,8 @@ import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -15,7 +15,11 @@ class BotCommandMovementV2Test {
 
     @Test
     void freshInstallDefaultsMovementV2On() throws IOException {
-        String config = Files.readString(Path.of("src", "main", "resources", "config.yml"));
+        String config;
+        try (InputStream resource = BotCommandMovementV2Test.class.getResourceAsStream("/config.yml")) {
+            if (resource == null) throw new IOException("config.yml is not on the test classpath");
+            config = new String(resource.readAllBytes(), StandardCharsets.UTF_8);
+        }
 
         org.junit.jupiter.api.Assertions.assertTrue(
                 config.matches("(?s).*\\bv2:\\s*.*?\\benabled:\\s*true\\b.*"));

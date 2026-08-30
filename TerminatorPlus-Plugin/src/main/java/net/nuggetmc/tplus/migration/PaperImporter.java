@@ -95,14 +95,93 @@ public final class PaperImporter {
                 invalid.add(yaml + ": top-level YAML value is not a map");
                 return;
             }
-            // Keep the original YAML shape for values with no TOML equivalent;
-            // the report makes the conversion auditable without dropping keys.
-            Files.writeString(target, new Yaml().dump(parsed), StandardCharsets.UTF_8);
-            copied.add(target.toString());
+            Map<String, Object> values = normalizeMap(parsed instanceof Map<?, ?> map ? map : Map.of());
+            // Keep an auditable copy as well as a native TOML conversion. The
+            // raw copy is useful for keys that a future NeoForge release adds;
+            // the server itself reads only the sibling TOML file.
+            if (!Files.exists(target)) {
+                Files.writeString(target, new Yaml().dump(parsed), StandardCharsets.UTF_8);
+                copied.add(target.toString());
+            } else {
+                skipped.add(target.toString());
+            }
+
+            Path nativeConfig = targetRoot.getParent() == null
+                    ? targetRoot.resolveSibling("terminatorplus-server.toml")
+                    : targetRoot.getParent().resolve("terminatorplus-server.toml");
+            if (Files.exists(nativeConfig)) {
+                skipped.add(nativeConfig.toString());
+            } else {
+                Files.createDirectories(nativeConfig.getParent());
+                Files.writeString(nativeConfig, toToml(values), StandardCharsets.UTF_8);
+                copied.add(nativeConfig.toString());
+            }
             messages.add("config-converted=" + yaml);
         } catch (Exception error) {
             invalid.add(yaml + ": " + error.getMessage());
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> normalizeMap(Map<?, ?> source) {
+        Map<String, Object> normalized = new java.util.LinkedHashMap<>();
+        for (Map.Entry<?, ?> entry : source.entrySet()) {
+            if (entry.getKey() == null) continue;
+            Object value = entry.getValue();
+            if (value instanceof Map<?, ?> map) value = normalizeMap(map);
+            else if (value instanceof List<?> list) {
+                List<Object> copy = new ArrayList<>(list.size());
+                for (Object item : list) {
+                    copy.add(item instanceof Map<?, ?> mapItem ? normalizeMap(mapItem) : item);
+                }
+                value = copy;
+            }
+            normalized.put(String.valueOf(entry.getKey()), value);
+        }
+        return normalized;
+    }
+
+    private static String toToml(Map<String, Object> values) {
+        Map<String, Object> flat = new java.util.LinkedHashMap<>();
+        flatten("", values, flat);
+        StringBuilder output = new StringBuilder("# Imported from Paper TerminatorPlus configuration\n");
+        String section = null;
+        for (Map.Entry<String, Object> entry : flat.entrySet()) {
+            String path = entry.getKey();
+            int split = path.lastIndexOf('.');
+            String nextSection = split < 0 ? "" : path.substring(0, split);
+            String key = split < 0 ? path : path.substring(split + 1);
+            if (!nextSection.equals(section)) {
+                if (!nextSection.isEmpty()) output.append('\n').append('[').append(nextSection).append("]\n");
+                section = nextSection;
+            }
+            output.append(key).append(" = ").append(formatToml(entry.getValue())).append('\n');
+        }
+        return output.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void flatten(String prefix, Map<String, Object> source, Map<String, Object> target) {
+        for (Map.Entry<String, Object> entry : source.entrySet()) {
+            String key = prefix.isEmpty() ? entry.getKey() : prefix + "." + entry.getKey();
+            if (entry.getValue() instanceof Map<?, ?> map) {
+                flatten(key, (Map<String, Object>) map, target);
+            } else {
+                target.put(key, entry.getValue());
+            }
+        }
+    }
+
+    private static String formatToml(Object value) {
+        if (value instanceof Boolean || value instanceof Number) return String.valueOf(value);
+        if (value instanceof Iterable<?> iterable) {
+            List<String> items = new ArrayList<>();
+            for (Object item : iterable) items.add(formatToml(item));
+            return "[" + String.join(", ", items) + "]";
+        }
+        String text = String.valueOf(value == null ? "" : value)
+                .replace("\\", "\\\\").replace("\"", "\\\"");
+        return "\"" + text + "\"";
     }
 
     private static void importPresets(Path source, Path target, List<String> copied,
