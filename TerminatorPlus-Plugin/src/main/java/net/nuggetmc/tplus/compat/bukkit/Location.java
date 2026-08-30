@@ -19,5 +19,20 @@ public class Location implements Cloneable {
         double r=Math.max(0.0,radius), r2=r*r;
         return world.getPlayers().stream().filter(p->p.getLocation().distanceSquared(this)<=r2).toList();
     }
-    @Override public Location clone(){return new Location(world,x,y,z,yaw,pitch);} @Override public String toString(){return "Location{"+(world==null?"null":world.getName())+","+x+","+y+","+z+"}";}
+    @Override public Location clone(){return new Location(world,x,y,z,yaw,pitch);}
+    @Override public boolean equals(Object object){
+        if (this == object) return true;
+        if (!(object instanceof Location other)) return false;
+        boolean sameWorld = world == other.world
+                || (world != null && other.world != null
+                && java.util.Objects.equals(world.getName(), other.world.getName()));
+        return sameWorld
+                && Double.compare(x, other.x) == 0
+                && Double.compare(y, other.y) == 0
+                && Double.compare(z, other.z) == 0
+                && Float.compare(yaw, other.yaw) == 0
+                && Float.compare(pitch, other.pitch) == 0;
+    }
+    @Override public int hashCode(){return java.util.Objects.hash(world == null ? null : world.getName(), x, y, z, yaw, pitch);}
+    @Override public String toString(){return "Location{"+(world==null?"null":world.getName())+","+x+","+y+","+z+"}";}
 }

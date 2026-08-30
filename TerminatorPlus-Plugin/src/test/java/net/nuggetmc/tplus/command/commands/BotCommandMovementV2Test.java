@@ -15,7 +15,7 @@ class BotCommandMovementV2Test {
 
     @Test
     void freshInstallDefaultsMovementV2On() throws IOException {
-        String config = Files.readString(Path.of("..", "src", "main", "resources", "config.yml"));
+        String config = Files.readString(Path.of("src", "main", "resources", "config.yml"));
 
         org.junit.jupiter.api.Assertions.assertTrue(
                 config.matches("(?s).*\\bv2:\\s*.*?\\benabled:\\s*true\\b.*"));

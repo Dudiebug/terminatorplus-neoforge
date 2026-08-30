@@ -15,6 +15,9 @@ public enum Material {
 
     public static Material matchMaterial(String name) {
         if (name == null) return null;
+        // 26.2 exposed IRON_CHAIN as a taxonomy entry; 1.21.1 has the
+        // vanilla CHAIN block and no separate copper-chain block.
+        if ("IRON_CHAIN".equalsIgnoreCase(name)) return CHAIN;
         try { return valueOf(name.toUpperCase(java.util.Locale.ROOT)); } catch (IllegalArgumentException ignored) { return null; }
     }
     public static Material getMaterial(String name) { return matchMaterial(name); }
