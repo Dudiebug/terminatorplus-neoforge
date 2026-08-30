@@ -2,35 +2,24 @@ name: "Compile"
 
 on: [push, pull_request]
 
-# Branch-aware toolchain: mc-1.21.11 still builds on Java 21, but mc-26.2 and
-# modern Paper branches require Java 25. Pick the JDK by branch so the
-# same workflow is green on every long-lived branch.
+# This port targets Minecraft 1.21.1 and Java 21. Keep the workflow explicit so
+# a future branch cannot silently pick an incompatible runtime.
 jobs:
   gradle:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Java version by branch
-        id: java
-        shell: bash
-        run: |
-          branch="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
-          case "$branch" in
-            mc-1.21.11) echo "version=21" >> "$GITHUB_OUTPUT" ;;
-            *)          echo "version=25" >> "$GITHUB_OUTPUT" ;;
-          esac
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ steps.java.outputs.version }}
+          java-version: "21"
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Execute Gradle build
-        run: ./gradlew build
+      - name: Execute Gradle build and tests
+        run: ./gradlew build --no-daemon --stacktrace
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4

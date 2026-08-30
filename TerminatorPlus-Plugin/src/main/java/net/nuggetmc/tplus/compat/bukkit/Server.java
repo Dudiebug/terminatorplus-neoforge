@@ -28,7 +28,7 @@ public class Server {
     public double[] getTPS() { return new double[]{20,20,20}; }
     public int getProfilePermissions(com.mojang.authlib.GameProfile profile) { return 4; }
     public CommandSender getConsoleSender() { return new CommandSender() { public void sendMessage(String message) { getLogger().info(message); } public boolean isOp() { return true; } }; }
-    public void dispatchCommand(CommandSender sender, String command) { }
+    public boolean dispatchCommand(CommandSender sender, String command) { return false; }
     public int getSpawnRadius() { return 0; }
     public static final class PluginManager {
         public void registerEvents(Object listener, Plugin plugin) { }

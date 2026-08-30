@@ -18,5 +18,12 @@ public class Block {
     public BoundingBox getBoundingBox(){var bounds=level.getBlockState(pos).getShape(level,pos).bounds();return new BoundingBox(pos.getX()+bounds.minX,pos.getY()+bounds.minY,pos.getZ()+bounds.minZ,pos.getX()+bounds.maxX,pos.getY()+bounds.maxY,pos.getZ()+bounds.maxZ);} public Material[] getDrops(){return new Material[]{getType()};} public boolean isPassable(){return getType().isAir()||isLiquid()||level.getBlockState(pos).canBeReplaced();} public boolean isReplaceable(){return level.getBlockState(pos).canBeReplaced();} public boolean canPlace(Object data){return isPassable();}
     public void setBlockData(net.nuggetmc.tplus.compat.bukkit.block.data.BlockData data,boolean applyPhysics){if(data!=null&&data.nms()!=null)level.setBlock(pos,data.nms(),3);} public void setBlockData(Object data,boolean applyPhysics){if(data instanceof net.nuggetmc.tplus.compat.bukkit.block.data.BlockData b)setBlockData(b,applyPhysics);} public void setBlockData(Object data){setBlockData(data,false);}
     public boolean breakNaturally(){return level.destroyBlock(pos,true);} public boolean breakNaturally(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack tool){return level.destroyBlock(pos,true);}
+    public float getBreakSpeed(net.nuggetmc.tplus.compat.bukkit.entity.Player player){return getDestroySpeed(player==null?null:player.getInventory().getItemInMainHand());}
+    public float getDestroySpeed(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack tool){
+        float speed=level.getBlockState(pos).getDestroySpeed(level,pos);
+        if (speed < 0.0f) return 0.0f;
+        return speed;
+    }
+    public boolean isPreferredTool(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack tool){return false;}
     private static Material material(BlockState state){String id=state.getBlockHolder().unwrapKey().map(k->k.location().getPath().toUpperCase(java.util.Locale.ROOT)).orElse("AIR");try{return Material.valueOf(id);}catch(IllegalArgumentException e){return state.isAir()?Material.AIR:Material.STONE;}}
 }

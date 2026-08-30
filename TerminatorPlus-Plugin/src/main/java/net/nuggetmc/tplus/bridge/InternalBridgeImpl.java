@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket;
 import net.nuggetmc.tplus.api.InternalBridge;
 import net.nuggetmc.tplus.compat.bukkit.block.Block;
-import net.nuggetmc.tplus.compat.bukkit.craftbukkit.entity.CraftPlayer;
 import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 public class InternalBridgeImpl implements InternalBridge {
@@ -12,7 +11,7 @@ public class InternalBridgeImpl implements InternalBridge {
     public void sendBlockDestructionPacket(short entityId, Block block, int progress) {
         ClientboundBlockDestructionPacket crack = new ClientboundBlockDestructionPacket(entityId, new BlockPos(block.getX(), block.getY(), block.getZ()), progress);
         for (Player all : block.getLocation().getNearbyPlayers(64)) {
-            ((CraftPlayer) all).getHandle().connection.send(crack);
+            all.getHandle().connection.send(crack);
         }
     }
 }

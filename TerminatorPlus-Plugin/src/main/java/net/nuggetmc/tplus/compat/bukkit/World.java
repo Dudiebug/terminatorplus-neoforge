@@ -25,6 +25,10 @@ public class World {
     public void playSound(Location loc,Sound sound,SoundCategory category,float volume,float pitch){playSound(loc,sound,volume,pitch);}
     public int getMinHeight(){return handle.getMinBuildHeight();} public int getMaxHeight(){return handle.getMaxBuildHeight();}
     public Block getHighestBlockAt(int x,int z){int y=handle.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z)-1;return getBlockAt(x,y,z);}
+    public Block getHighestBlockAt(int x,int z,HeightMap map){
+        var type=switch(map==null?HeightMap.MOTION_BLOCKING_NO_LEAVES:map){case MOTION_BLOCKING->net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING;case OCEAN_FLOOR->net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR;case WORLD_SURFACE->net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE;default->net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;};
+        return getBlockAt(x,handle.getHeight(type,x,z)-1,z);
+    }
     public WorldBorder getWorldBorder(){return new WorldBorder(handle.getWorldBorder());}
     public boolean isChunkLoaded(int x,int z){return handle.hasChunk(x,z);}
     public net.nuggetmc.tplus.compat.bukkit.util.RayTraceResult rayTraceBlocks(Location start, net.nuggetmc.tplus.compat.bukkit.util.Vector direction, double maxDistance, FluidCollisionMode fluidMode, boolean ignorePassable){
@@ -34,7 +38,7 @@ public class World {
         to=from.add(to);
         ClipContext.Block blockMode=ignorePassable?ClipContext.Block.COLLIDER:ClipContext.Block.OUTLINE;
         ClipContext.Fluid fluid=fluidMode==FluidCollisionMode.NEVER?ClipContext.Fluid.NONE:fluidMode==FluidCollisionMode.SOURCE_ONLY?ClipContext.Fluid.SOURCE_ONLY:ClipContext.Fluid.ANY;
-        BlockHitResult hit=handle.clip(new ClipContext(from,to,blockMode,fluid,null));
+        BlockHitResult hit=handle.clip(new ClipContext(from,to,blockMode,fluid,net.minecraft.world.phys.shapes.CollisionContext.empty()));
         if(hit==null||hit.getType()==net.minecraft.world.phys.HitResult.Type.MISS) return null;
         BlockPos pos=hit.getBlockPos();
         return new net.nuggetmc.tplus.compat.bukkit.util.RayTraceResult(new net.nuggetmc.tplus.compat.bukkit.util.Vector(hit.getLocation().x,hit.getLocation().y,hit.getLocation().z),getBlockAt(pos),null);

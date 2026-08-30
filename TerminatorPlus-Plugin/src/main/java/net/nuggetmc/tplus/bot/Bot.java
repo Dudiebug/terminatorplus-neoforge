@@ -81,6 +81,7 @@ public class Bot extends ServerPlayer implements Terminator {
     private final TerminatorPlus plugin;
     private final BukkitScheduler scheduler;
     private final Agent agent;
+    private final String displayName;
     private final Vector offset;
     public ItemStack defaultItem;
     private NeuralNetwork network;
@@ -139,6 +140,7 @@ public class Bot extends ServerPlayer implements Terminator {
         super(minecraftServer, worldServer, profile, ClientInformation.createDefault());
 
         this.plugin = TerminatorPlus.getInstance();
+        this.displayName = profile.getName();
         this.scheduler = Bukkit.getScheduler();
         this.agent = plugin.getManager().getAgent();
         this.defaultItem = new ItemStack(Material.AIR);

@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.nms;
 
-import io.netty.channel.ChannelFutureListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketListener;
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
 import net.nuggetmc.tplus.compat.bukkit.Bukkit;
@@ -79,11 +79,8 @@ public class MockConnection extends Connection {
 
     public MockConnection() {
         super(PacketFlow.SERVERBOUND);
-        this.channel = new MockChannel(null);
-        // Paper 26.1 hardened null-checks on address during login-phase packet emit.
-        // A sentinel loopback InetSocketAddress is cheap and satisfies every path
-        // that reflects on `this.address.getAddress()` / `getHostString()`.
-        this.address = new InetSocketAddress("127.0.0.1", 0);
+        setField("channel", new MockChannel(null));
+        setField("address", new InetSocketAddress("127.0.0.1", 0));
     }
 
     @Override
@@ -100,11 +97,11 @@ public class MockConnection extends Connection {
     }
 
     @Override
-    public void send(@NotNull Packet<?> packet, ChannelFutureListener sendListener) {
+    public void send(@NotNull Packet<?> packet, PacketSendListener sendListener) {
     }
 
     @Override
-    public void send(@NotNull Packet<?> packet, ChannelFutureListener sendListener, boolean flag) {
+    public void send(@NotNull Packet<?> packet, PacketSendListener sendListener, boolean flag) {
     }
 
     @Override
@@ -114,6 +111,16 @@ public class MockConnection extends Connection {
             DISCONNECT_LISTENER_FIELD.set(this, null);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void setField(String name, Object value) {
+        try {
+            Field field = Connection.class.getDeclaredField(name);
+            field.setAccessible(true);
+            field.set(this, value);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Unable to initialise mock connection field " + name, e);
         }
     }
 }

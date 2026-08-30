@@ -14,5 +14,10 @@ public class Location implements Cloneable {
     public int getBlockX(){return floor(x);} public int getBlockY(){return floor(y);} public int getBlockZ(){return floor(z);} public static int locToBlock(double value){return floor(value);} private static int floor(double v){return (int)Math.floor(v);}
     public double distance(Location other){return Math.sqrt(distanceSquared(other));} public double distanceSquared(Location other){if(other==null||world!=other.world) return Double.POSITIVE_INFINITY;double dx=x-other.x,dy=y-other.y,dz=z-other.z;return dx*dx+dy*dy+dz*dz;}
     public Vector getDirection(){double pitchRad=Math.toRadians(pitch),yawRad=Math.toRadians(yaw);double xz=-Math.cos(pitchRad);return new Vector(-xz*Math.sin(yawRad),-Math.sin(pitchRad),xz*Math.cos(yawRad));}
+    public java.util.List<net.nuggetmc.tplus.compat.bukkit.entity.Player> getNearbyPlayers(double radius){
+        if(world==null) return java.util.List.of();
+        double r=Math.max(0.0,radius), r2=r*r;
+        return world.getPlayers().stream().filter(p->p.getLocation().distanceSquared(this)<=r2).toList();
+    }
     @Override public Location clone(){return new Location(world,x,y,z,yaw,pitch);} @Override public String toString(){return "Location{"+(world==null?"null":world.getName())+","+x+","+y+","+z+"}";}
 }

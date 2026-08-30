@@ -1,1 +1,1 @@
-package net.nuggetmc.tplus.compat.bukkit.entity; public class EnderPearl extends Entity { public EnderPearl(net.minecraft.world.entity.Entity e){super(e);} }
+package net.nuggetmc.tplus.compat.bukkit.entity; public class EnderPearl extends Entity { private Object shooter; public EnderPearl(net.minecraft.world.entity.Entity e){super(e);} public void setShooter(Object s){shooter=s;} public Object getShooter(){return shooter;} }

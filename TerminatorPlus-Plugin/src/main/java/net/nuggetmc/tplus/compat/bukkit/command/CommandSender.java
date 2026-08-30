@@ -7,6 +7,7 @@ public interface CommandSender extends ServerOperator {
     void sendMessage(String message);
     default void sendMessage(String... messages) { if (messages != null) for (String message : messages) sendMessage(message); }
     default boolean hasPermission(String permission) { return isOp(); }
+    default void sendRichMessage(String message) { sendMessage(message == null ? "" : message.replaceAll("<[^>]+>", "")); }
     default String getName() { return "Server"; }
     default Spigot spigot(){return new Spigot(this);} final class Spigot { private final CommandSender sender; public Spigot(CommandSender s){sender=s;} public void sendMessage(net.nuggetmc.tplus.compat.bungee.chat.BaseComponent... components){if(components!=null)for(var c:components)sender.sendMessage(c==null?"":c.toString());} }
 }
