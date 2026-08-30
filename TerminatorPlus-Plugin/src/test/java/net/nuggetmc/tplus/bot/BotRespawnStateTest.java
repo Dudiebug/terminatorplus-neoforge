@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot;
 
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -37,11 +37,11 @@ class BotRespawnStateTest {
     void retainsTheFirstSafeGroundedLocation() {
         LocationCandidate first = new LocationCandidate(4, 64, 9);
         LocationCandidate later = new LocationCandidate(20, 70, 30);
-        org.bukkit.Location firstLocation = first.location();
+        net.nuggetmc.tplus.compat.bukkit.Location firstLocation = first.location();
 
-        org.bukkit.Location anchor = RespawnSafety.captureAnchor(
+        net.nuggetmc.tplus.compat.bukkit.Location anchor = RespawnSafety.captureAnchor(
                 null, firstLocation, true, ignored -> true);
-        org.bukkit.Location retained = RespawnSafety.captureAnchor(
+        net.nuggetmc.tplus.compat.bukkit.Location retained = RespawnSafety.captureAnchor(
                 anchor, later.location(), true, ignored -> true);
 
         assertNotSame(firstLocation, anchor);
@@ -79,8 +79,8 @@ class BotRespawnStateTest {
 
     @Test
     void emitsPoofThroughTheSmallTestableSeam() {
-        org.bukkit.Location location = new LocationCandidate(4, 64, 9).location();
-        List<org.bukkit.Location> emitted = new ArrayList<>();
+        net.nuggetmc.tplus.compat.bukkit.Location location = new LocationCandidate(4, 64, 9).location();
+        List<net.nuggetmc.tplus.compat.bukkit.Location> emitted = new ArrayList<>();
 
         RespawnSafety.emitPoof(location, emitted::add);
 
@@ -90,8 +90,8 @@ class BotRespawnStateTest {
     }
 
     private record LocationCandidate(int x, int y, int z) {
-        org.bukkit.Location location() {
-            return new org.bukkit.Location(null, x, y, z);
+        net.nuggetmc.tplus.compat.bukkit.Location location() {
+            return new net.nuggetmc.tplus.compat.bukkit.Location(null, x, y, z);
         }
     }
 }

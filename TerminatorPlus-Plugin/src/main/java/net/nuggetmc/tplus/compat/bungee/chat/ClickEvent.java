@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bungee.chat; public class ClickEvent { public enum Action{OPEN_URL,RUN_COMMAND,SUGGEST_COMMAND,COPY_TO_CLIPBOARD} private final Action action;private final String value;public ClickEvent(Action a,String v){action=a;value=v;}public Action getAction(){return action;}public String getValue(){return value;} }

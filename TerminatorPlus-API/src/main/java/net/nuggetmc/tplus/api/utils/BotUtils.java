@@ -1,9 +1,9 @@
 package net.nuggetmc.tplus.api.utils;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.NumberConversions;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.util.NumberConversions;
 
 import java.util.Arrays;
 import java.util.HashSet;

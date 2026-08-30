@@ -2,7 +2,7 @@ package net.nuggetmc.tplus.api.event;
 
 import java.util.List;
 
-import org.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
 
 import net.nuggetmc.tplus.api.Terminator;
 

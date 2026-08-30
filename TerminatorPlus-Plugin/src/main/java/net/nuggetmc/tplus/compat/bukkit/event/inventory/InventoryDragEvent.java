@@ -1,0 +1,3 @@
+package net.nuggetmc.tplus.compat.bukkit.event.inventory;
+import net.nuggetmc.tplus.compat.bukkit.event.*; import net.nuggetmc.tplus.compat.bukkit.entity.HumanEntity;
+public class InventoryDragEvent extends Event implements Cancellable { private final InventoryView view; private final HumanEntity who; private boolean cancelled; public InventoryDragEvent(HumanEntity who,InventoryView view){this.who=who;this.view=view;}public InventoryView getView(){return view;}public HumanEntity getWhoClicked(){return who;}public boolean isCancelled(){return cancelled;}public void setCancelled(boolean v){cancelled=v;} }

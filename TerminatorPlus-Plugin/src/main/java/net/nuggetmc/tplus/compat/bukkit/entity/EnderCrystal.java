@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bukkit.entity; public class EnderCrystal extends Entity { public EnderCrystal(net.minecraft.world.entity.Entity e){super(e);} public void setShowingBottom(boolean b){} }

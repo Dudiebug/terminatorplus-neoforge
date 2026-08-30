@@ -2,7 +2,7 @@ package net.nuggetmc.tplus.bot.navigation;
 
 import net.nuggetmc.tplus.bot.combat.CombatIntent;
 import net.nuggetmc.tplus.bot.combat.MovementObjective;
-import org.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Location;
 
 import java.util.List;
 import java.util.UUID;

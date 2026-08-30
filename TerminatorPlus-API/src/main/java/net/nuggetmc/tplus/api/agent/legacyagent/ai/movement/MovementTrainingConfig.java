@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.api.agent.legacyagent.ai.movement;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.configuration.file.FileConfiguration;
+import net.nuggetmc.tplus.compat.bukkit.configuration.ConfigurationSection;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
 
 import java.nio.file.Path;
 import java.util.Collections;

@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.api.utils;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.util.NumberConversions;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.text.DecimalFormat;
 import java.util.*;

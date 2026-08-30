@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.movement;
 
-import org.bukkit.configuration.MemoryConfiguration;
+import net.nuggetmc.tplus.compat.bukkit.configuration.MemoryConfiguration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

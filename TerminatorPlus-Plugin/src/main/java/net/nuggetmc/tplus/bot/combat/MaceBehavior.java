@@ -2,14 +2,14 @@ package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
 import net.nuggetmc.tplus.bot.loadout.BotInventory;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.WindCharge;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.Sound;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.entity.WindCharge;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Jump-smash behavior for the 1.21 mace. The bot holds the mace long enough for

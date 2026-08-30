@@ -3,7 +3,7 @@ package net.nuggetmc.tplus.bot.combat;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.LiveDuelMetricsSnapshot;
 import net.nuggetmc.tplus.bot.Bot;
 import net.nuggetmc.tplus.bot.movement.MovementOutputApplier;
-import org.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
 
 import java.util.Map;
 import java.util.UUID;

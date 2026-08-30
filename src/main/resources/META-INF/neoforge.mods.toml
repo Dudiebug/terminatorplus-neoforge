@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="EPL-2.0"
+authors="Dudiebug, HorseNuggets"
+
+[[mods]]
+modId="terminatorplus"
+version="${file.jarVersion}"
+displayName="TerminatorPlus NeoForge"
+description='''Server-side player bots for NeoForge 1.21.1.'''
+
+[[dependencies.terminatorplus]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.249,)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.terminatorplus]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="SERVER"

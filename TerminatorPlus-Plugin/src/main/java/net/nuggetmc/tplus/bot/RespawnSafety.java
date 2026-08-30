@@ -1,12 +1,12 @@
 package net.nuggetmc.tplus.bot;
 
-import org.bukkit.Bukkit;
-import org.bukkit.HeightMap;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.Waterlogged;
-import org.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.HeightMap;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.World;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Waterlogged;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.Comparator;

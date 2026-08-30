@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bukkit.entity; public interface Damageable { double getHealth(); void setHealth(double health); default void damage(double amount){} default void damage(double amount,LivingEntity source){} }

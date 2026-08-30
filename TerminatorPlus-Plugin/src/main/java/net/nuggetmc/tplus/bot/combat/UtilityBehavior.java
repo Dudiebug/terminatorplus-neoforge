@@ -1,10 +1,10 @@
 package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Low-priority anti-mobility: if the target is moving away from the bot

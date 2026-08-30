@@ -1,12 +1,12 @@
 package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.WindCharge;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Sound;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.WindCharge;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Wind charges are deliberately thrown to launch the bot in a calculated direction

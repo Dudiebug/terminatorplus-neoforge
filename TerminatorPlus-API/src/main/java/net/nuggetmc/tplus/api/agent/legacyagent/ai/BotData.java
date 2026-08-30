@@ -2,9 +2,9 @@ package net.nuggetmc.tplus.api.agent.legacyagent.ai;
 
 import net.nuggetmc.tplus.api.Terminator;
 import net.nuggetmc.tplus.api.utils.MathUtils;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 import java.util.*;
 

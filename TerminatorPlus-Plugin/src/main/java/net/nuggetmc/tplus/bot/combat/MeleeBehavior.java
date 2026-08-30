@@ -2,9 +2,9 @@ package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
 import net.nuggetmc.tplus.bot.loadout.BotInventory;
-import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 
 /**
  * Cooldown-aware melee. Swings only when:

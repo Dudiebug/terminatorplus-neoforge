@@ -5,11 +5,11 @@ import net.nuggetmc.tplus.api.Terminator;
 import net.nuggetmc.tplus.api.agent.legacyagent.EnumTargetGoal;
 import net.nuggetmc.tplus.api.agent.legacyagent.LegacyAgent;
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.configuration.file.YamlConfiguration;
+import net.nuggetmc.tplus.compat.bukkit.inventory.EquipmentSlot;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;

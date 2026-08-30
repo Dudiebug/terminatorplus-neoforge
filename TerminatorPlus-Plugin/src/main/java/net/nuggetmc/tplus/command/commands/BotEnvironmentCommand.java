@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.entity.EntityType;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.api.agent.legacyagent.CustomListMode;

@@ -1,12 +1,12 @@
 package net.nuggetmc.tplus.bot.loadout;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionType;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.inventory.EquipmentSlot;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.PlayerInventory;
+import net.nuggetmc.tplus.compat.bukkit.inventory.meta.PotionMeta;
+import net.nuggetmc.tplus.compat.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -284,9 +284,9 @@ public final class BotInventory {
         ItemStack evicted = inv.getItem(target);
         net.minecraft.world.entity.player.Inventory nms = bot.getInventory();
         nms.setItem(target, moving == null ? net.minecraft.world.item.ItemStack.EMPTY
-                : org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(moving));
+                : net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(moving));
         nms.setItem(slot, evicted == null ? net.minecraft.world.item.ItemStack.EMPTY
-                : org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(evicted));
+                : net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(evicted));
         nms.setChanged();
         return target;
     }
@@ -323,9 +323,9 @@ public final class BotInventory {
         ItemStack secondItem = inv.getItem(second);
         net.minecraft.world.entity.player.Inventory nms = bot.getInventory();
         nms.setItem(first, secondItem == null ? net.minecraft.world.item.ItemStack.EMPTY
-                : org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(secondItem));
+                : net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(secondItem));
         nms.setItem(second, firstItem == null ? net.minecraft.world.item.ItemStack.EMPTY
-                : org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(firstItem));
+                : net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(firstItem));
         nms.setChanged();
         return true;
     }
@@ -1036,7 +1036,7 @@ public final class BotInventory {
     private static boolean setMainSlotIfChanged(net.minecraft.world.entity.player.Inventory nmsInv, int slot, ItemStack bukkitItem) {
         net.minecraft.world.item.ItemStack incoming = (bukkitItem == null || bukkitItem.getType() == Material.AIR)
                 ? net.minecraft.world.item.ItemStack.EMPTY
-                : org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(bukkitItem);
+                : net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(bukkitItem);
         net.minecraft.world.item.ItemStack existing = nmsInv.getItem(slot);
         if (net.minecraft.world.item.ItemStack.matches(existing, incoming)) {
             return false;

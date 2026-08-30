@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api;
 
-import org.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
 
 /**
  * This class serves as a bridge between the API and internal code that interacts with NMS.

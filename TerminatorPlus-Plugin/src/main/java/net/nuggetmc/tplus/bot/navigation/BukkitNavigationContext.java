@@ -1,14 +1,14 @@
 package net.nuggetmc.tplus.bot.navigation;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Openable;
-import org.bukkit.block.data.Waterlogged;
-import org.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.World;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.data.BlockData;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Openable;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Waterlogged;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
 import java.util.Map;

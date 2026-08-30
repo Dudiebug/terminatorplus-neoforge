@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.api.agent.legacyagent;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
 
 /**
  * Selects the movement implementation for a bot. The selected strategy may

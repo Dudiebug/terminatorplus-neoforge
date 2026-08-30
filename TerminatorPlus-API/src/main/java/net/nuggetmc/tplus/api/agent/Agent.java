@@ -6,12 +6,12 @@ import net.nuggetmc.tplus.api.event.BotDamageByPlayerEvent;
 import net.nuggetmc.tplus.api.event.BotDeathEvent;
 import net.nuggetmc.tplus.api.event.BotFallDamageEvent;
 import net.nuggetmc.tplus.api.event.BotKilledByPlayerEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitRunnable;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitScheduler;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashSet;

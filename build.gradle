@@ -1,0 +1,94 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.144'
+}
+
+group = 'net.nuggetmc'
+version = '6.2.7-neoforge-1.21.1'
+
+base {
+    archivesName = 'terminatorplus-neoforge'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+sourceSets.main.java.srcDirs = [
+        'TerminatorPlus-API/src/main/java',
+        'TerminatorPlus-Plugin/src/main/java'
+]
+sourceSets.main.resources.srcDirs = [
+        'src/main/resources',
+        'TerminatorPlus-Plugin/src/main/resources'
+]
+sourceSets.test.java.srcDirs = [
+        'TerminatorPlus-API/src/test/java',
+        'TerminatorPlus-Plugin/src/test/java'
+]
+
+repositories {
+    mavenCentral()
+}
+
+neoForge {
+    version = '21.1.249'
+
+    parchment {
+        mappingsVersion = '2024.11.17'
+        minecraftVersion = '1.21.1'
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'terminatorplus'
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'terminatorplus'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'terminatorplus,minecraft'
+        }
+    }
+
+    mods {
+        terminatorplus {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.yaml:snakeyaml:2.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+tasks.register('apiJar', Jar) {
+    archiveBaseName = 'terminatorplus-neoforge-api'
+    from sourceSets.main.output
+    include 'net/nuggetmc/tplus/api/**'
+}
+
+publishing {
+    publications {
+        api(MavenPublication) {
+            artifact tasks.named('apiJar')
+        }
+    }
+    repositories {
+        maven { url = layout.buildDirectory.dir('repo') }
+    }
+}

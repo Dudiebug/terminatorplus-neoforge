@@ -1,8 +1,7 @@
 package net.nuggetmc.tplus.api.utils;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
-import com.destroystokyo.paper.profile.ProfileProperty;
-import org.bukkit.Bukkit;
+import com.mojang.authlib.properties.Property;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
 
 import java.util.Collections;
 import java.util.Collection;
@@ -62,9 +61,9 @@ public class MojangAPI {
         return pending;
     }
 
-    static SkinData extractTextures(Collection<ProfileProperty> properties) {
+    static SkinData extractTextures(Collection<Property> properties) {
         if (properties == null) return null;
-        for (ProfileProperty property : properties) {
+        for (Property property : properties) {
             if (!"textures".equals(property.getName()) || !property.isSigned()) continue;
             String value = property.getValue();
             String signature = property.getSignature();
@@ -75,40 +74,22 @@ public class MojangAPI {
     }
 
     private static void lookupProfile(String requestedName, String key, CompletableFuture<SkinLookup> result) {
-        final PlayerProfile profile;
-        try {
-            profile = Bukkit.createProfile(requestedName);
-        } catch (RuntimeException e) {
-            logFailure(requestedName, e);
-            completeLookup(key, result, SkinLookup.unavailable(e));
-            return;
-        }
-
-        try {
-            profile.update().whenComplete((updated, error) -> {
-                if (error != null) {
-                    logFailure(requestedName, error);
-                    completeLookup(key, result, SkinLookup.unavailable(error));
-                    return;
-                }
-
-                SkinLookup lookup;
-                try {
-                    SkinData skin = extractTextures(updated == null ? null : updated.getProperties());
-                    lookup = skin == null
-                            ? SkinLookup.notFound()
-                            : SkinLookup.success(skin);
-                    if (skin != null) CACHE.put(key, skin);
-                } catch (RuntimeException e) {
-                    logFailure(requestedName, e);
-                    lookup = SkinLookup.unavailable(e);
-                }
-                completeLookup(key, result, lookup);
-            });
-        } catch (RuntimeException e) {
-            logFailure(requestedName, e);
-            completeLookup(key, result, SkinLookup.unavailable(e));
-        }
+        CompletableFuture.runAsync(() -> {
+            try {
+                java.net.URI lookup = java.net.URI.create("https://api.mojang.com/users/profiles/minecraft/" + java.net.URLEncoder.encode(requestedName, java.nio.charset.StandardCharsets.UTF_8));
+                java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
+                var response = client.send(java.net.http.HttpRequest.newBuilder(lookup).GET().build(), java.net.http.HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() != 200) { completeLookup(key,result,SkinLookup.notFound()); return; }
+                String id = com.google.gson.JsonParser.parseString(response.body()).getAsJsonObject().get("id").getAsString();
+                var textureResponse = client.send(java.net.http.HttpRequest.newBuilder(java.net.URI.create("https://sessionserver.mojang.com/session/minecraft/profile/" + id + "?unsigned=false")).GET().build(), java.net.http.HttpResponse.BodyHandlers.ofString());
+                if (textureResponse.statusCode() != 200) { completeLookup(key,result,SkinLookup.notFound()); return; }
+                var properties = com.google.gson.JsonParser.parseString(textureResponse.body()).getAsJsonObject().getAsJsonArray("properties");
+                SkinData skin = null;
+                if (properties != null) for (var element : properties) { var p=element.getAsJsonObject(); if ("textures".equals(p.get("name").getAsString()) && p.has("signature")) { skin=new SkinData(p.get("value").getAsString(),p.get("signature").getAsString()); break; } }
+                if (skin != null) CACHE.put(key,skin);
+                completeLookup(key,result,skin==null?SkinLookup.notFound():SkinLookup.success(skin));
+            } catch (Exception e) { logFailure(requestedName,e); completeLookup(key,result,SkinLookup.unavailable(e)); }
+        });
     }
 
     private static void completeLookup(String key, CompletableFuture<SkinLookup> result, SkinLookup lookup) {

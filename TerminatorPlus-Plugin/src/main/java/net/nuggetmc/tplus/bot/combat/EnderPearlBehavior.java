@@ -1,12 +1,12 @@
 package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.EnderPearl;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.Sound;
+import net.nuggetmc.tplus.compat.bukkit.entity.EnderPearl;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Long-range movement: when the target is far enough that walking would waste time

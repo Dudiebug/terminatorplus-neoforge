@@ -54,23 +54,23 @@ import net.nuggetmc.tplus.bot.navigation.MovementV2Settings;
 import net.nuggetmc.tplus.command.commands.BotCommand;
 import net.nuggetmc.tplus.nms.MockConnection;
 import net.nuggetmc.tplus.utils.NMSUtils;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Waterlogged;
-import org.bukkit.craftbukkit.CraftEquipmentSlot;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.*;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.BlockFace;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Waterlogged;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.CraftEquipmentSlot;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.CraftServer;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.CraftWorld;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.entity.CraftPlayer;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack;
+import net.nuggetmc.tplus.compat.bukkit.enchantments.Enchantment;
+import net.nuggetmc.tplus.compat.bukkit.entity.Damageable;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitScheduler;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitTask;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -384,14 +384,14 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public boolean combatTick(org.bukkit.entity.LivingEntity target) {
+    public boolean combatTick(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         CombatDirector director = plugin.getCombatDirector();
         if (director == null) return false;
         return director.tick(this, target);
     }
 
     @Override
-    public boolean tickCommittedCombat(org.bukkit.entity.LivingEntity target) {
+    public boolean tickCommittedCombat(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         CombatDirector director = plugin.getCombatDirector();
         if (director == null) return false;
         return director.tickCommitted(this, target);
@@ -403,14 +403,14 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public void planCombat(org.bukkit.entity.LivingEntity target) {
+    public void planCombat(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         CombatDirector director = plugin.getCombatDirector();
         if (director == null) return;
         director.plan(this, target, getCombatIntent());
     }
 
     @Override
-    public boolean tryMovementControllerMove(org.bukkit.entity.LivingEntity target) {
+    public boolean tryMovementControllerMove(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         if (!usesMovementController()) return false;
         MovementOutputApplier.ApplyResult result = movementOutputApplier.tryApply(this, target, network.movementBrainBank());
         lastMovementControllerFallback = result.fallback();
@@ -420,7 +420,7 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public boolean tryMovementV2Move(org.bukkit.entity.LivingEntity target, Location routeTarget) {
+    public boolean tryMovementV2Move(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target, Location routeTarget) {
         if (!movementV2Enabled()) {
             if (traversalActionExecutor.active()) traversalActionExecutor.cancel(this, "movement-v2-disabled");
             movementV2Controller.reset();
@@ -538,7 +538,7 @@ public class Bot extends ServerPlayer implements Terminator {
         movementV2Controller.reset();
     }
 
-    private void followMovementV2Step(org.bukkit.entity.LivingEntity target, MovementV2Planner.Step step) {
+    private void followMovementV2Step(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target, MovementV2Planner.Step step) {
         Location waypoint = new Location(getBukkitEntity().getWorld(),
                 step.to().x() + 0.5, step.to().y(), step.to().z() + 0.5);
         Vector delta = waypoint.toVector().subtract(getLocation().toVector());
@@ -594,14 +594,14 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public boolean executePlannedCombat(org.bukkit.entity.LivingEntity target) {
+    public boolean executePlannedCombat(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         CombatDirector director = plugin.getCombatDirector();
         if (director == null) return false;
         return director.execute(this, target, getMovementState());
     }
 
     @Override
-    public MovementTrainingSnapshot movementTrainingSnapshot(org.bukkit.entity.LivingEntity target) {
+    public MovementTrainingSnapshot movementTrainingSnapshot(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         if (lastMovementV2ControlledTick == getAliveTicks()) return MovementTrainingSnapshot.unavailable();
         if (target == null || !target.isValid()) return MovementTrainingSnapshot.unavailable();
         CombatIntent intent = getCombatIntent();
@@ -702,7 +702,7 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public boolean canSwingAttack(org.bukkit.entity.LivingEntity target) {
+    public boolean canSwingAttack(net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity target) {
         return net.nuggetmc.tplus.bot.combat.BotCombatTiming.canSwing(this, target);
     }
 
@@ -971,7 +971,7 @@ public class Bot extends ServerPlayer implements Terminator {
     public void setShield(boolean enabled) {
         this.shield = enabled;
 
-        setItemOffhand(new org.bukkit.inventory.ItemStack(enabled ? Material.SHIELD : Material.AIR));
+        setItemOffhand(new net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack(enabled ? Material.SHIELD : Material.AIR));
     }
 
     private void updateLocation() {
@@ -1035,7 +1035,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
     private WaterExtinguishContact waterContactForExtinguish() {
         AABB box = getBoundingBox();
-        org.bukkit.World world = getBukkitEntity().getWorld();
+        net.nuggetmc.tplus.compat.bukkit.World world = getBukkitEntity().getWorld();
 
         int minX = Mth.floor(box.minX + 1.0E-7D);
         int maxX = Mth.floor(box.maxX - 1.0E-7D);
@@ -1182,7 +1182,7 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public void attack(org.bukkit.entity.Entity entity) {
+    public void attack(net.nuggetmc.tplus.compat.bukkit.entity.Entity entity) {
         faceLocation(entity.getLocation());
         if (actionController.blocksCombatAction()) {
             CombatDebugger.log(this, "attack-skip",
@@ -1214,7 +1214,7 @@ public class Bot extends ServerPlayer implements Terminator {
             return;
         }
 
-        if (entity instanceof org.bukkit.entity.LivingEntity) {
+        if (entity instanceof net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity) {
             if (!MeleeBehavior.isMeleeOrEmpty(botInventory.getSelected())) {
                 CombatDebugger.log(this, "attack-skip",
                         "reason=non-melee-held held=" + botInventory.getSelected().getType().name());
@@ -1223,7 +1223,7 @@ public class Bot extends ServerPlayer implements Terminator {
             boolean critPred = BotCombatTiming.isCritWindow(this);
             float chargeBefore = getAttackStrengthScale(0.0f);
             double before = entityHealth(entity);
-            boolean targetBlocking = entity instanceof org.bukkit.entity.Player player && player.isBlocking();
+            boolean targetBlocking = entity instanceof net.nuggetmc.tplus.compat.bukkit.entity.Player player && player.isBlocking();
             float chargeAtVanillaAttack = getAttackStrengthScale(0.0f);
             if (CombatDebugger.isOn(this)) {
                 CombatDebugger.log(this, "attack-try",
@@ -1783,25 +1783,25 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     @Override
-    public void setItem(org.bukkit.inventory.ItemStack item) {
+    public void setItem(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack item) {
         setItem(item, EquipmentSlot.MAINHAND);
     }
 
     @Override
-    public void setItemOffhand(org.bukkit.inventory.ItemStack item) {
+    public void setItemOffhand(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack item) {
         setItem(item, EquipmentSlot.OFFHAND);
     }
 
     @Override
-    public void setItem(ItemStack item, org.bukkit.inventory.EquipmentSlot slot) {
+    public void setItem(ItemStack item, net.nuggetmc.tplus.compat.bukkit.inventory.EquipmentSlot slot) {
         EquipmentSlot nmsSlot = CraftEquipmentSlot.getNMS(slot);
         setItem(item, nmsSlot);
     }
 
-    public void setItem(org.bukkit.inventory.ItemStack item, EquipmentSlot slot) {
+    public void setItem(net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack item, EquipmentSlot slot) {
         if (item == null) item = defaultItem;
 
-        org.bukkit.inventory.PlayerInventory inv = getBukkitEntity().getInventory();
+        net.nuggetmc.tplus.compat.bukkit.inventory.PlayerInventory inv = getBukkitEntity().getInventory();
         if (slot == EquipmentSlot.MAINHAND) {
             // CRITICAL: vanilla Player.tick detects main-hand item changes by REFERENCE
             // (getMainHandItem() != lastItemInMainHand) and calls resetAttackStrengthTicker()
@@ -1819,7 +1819,7 @@ public class Bot extends ServerPlayer implements Terminator {
             // skip the setItemInMainHand call AND skip the ClientboundSetEquipmentPacket
             // (clients already believe the slot holds this item, because they got the
             // packet for the first write).
-            org.bukkit.inventory.ItemStack existing = inv.getItemInMainHand();
+            net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack existing = inv.getItemInMainHand();
             net.minecraft.world.item.ItemStack incomingNms = CraftItemStack.asNMSCopy(item);
             net.minecraft.world.item.ItemStack existingNms = CraftItemStack.asNMSCopy(existing);
             if (net.minecraft.world.item.ItemStack.matches(existingNms, incomingNms)) {
@@ -1896,7 +1896,7 @@ public class Bot extends ServerPlayer implements Terminator {
         return held == null ? "AIR" : held.getType().name();
     }
 
-    private static double entityHealth(org.bukkit.entity.Entity entity) {
+    private static double entityHealth(net.nuggetmc.tplus.compat.bukkit.entity.Entity entity) {
         if (entity instanceof Damageable damageable) {
             try {
                 return Math.max(0.0, damageable.getHealth());
@@ -1914,7 +1914,7 @@ public class Bot extends ServerPlayer implements Terminator {
     private static String attackerToken(Entity attacker) {
         if (attacker == null) return "none";
         try {
-            org.bukkit.entity.Entity bukkit = attacker.getBukkitEntity();
+            net.nuggetmc.tplus.compat.bukkit.entity.Entity bukkit = attacker.getBukkitEntity();
             if (bukkit == null) return attacker.getType().toString();
             return bukkit.getType().name() + ":" + safeToken(bukkit.getName());
         } catch (RuntimeException ignored) {

@@ -8,9 +8,9 @@ import net.nuggetmc.tplus.bot.combat.CombatIntent;
 import net.nuggetmc.tplus.bot.combat.MovementBranchFamily;
 import net.nuggetmc.tplus.bot.combat.MovementObjective;
 import net.nuggetmc.tplus.bot.combat.MovementState;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.List;

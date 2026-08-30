@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.api.event;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.event.entity.EntityDeathEvent;
+import net.nuggetmc.tplus.compat.bukkit.event.entity.EntityDeathEvent;
 
 public class BotDeathEvent extends EntityDeathEvent {
 

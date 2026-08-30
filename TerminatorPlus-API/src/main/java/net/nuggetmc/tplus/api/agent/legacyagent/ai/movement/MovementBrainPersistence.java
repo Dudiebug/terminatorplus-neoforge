@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import org.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
 
 import java.io.IOException;
 import java.nio.file.AtomicMoveNotSupportedException;

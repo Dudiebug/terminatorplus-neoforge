@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api.utils;
 
-import net.md_5.bungee.api.ChatColor;
+import net.nuggetmc.tplus.compat.bungee.ChatColor;
 
 import java.text.NumberFormat;
 import java.util.Locale;

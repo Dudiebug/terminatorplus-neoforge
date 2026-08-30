@@ -3,9 +3,9 @@ package net.nuggetmc.tplus.bridge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket;
 import net.nuggetmc.tplus.api.InternalBridge;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.craftbukkit.entity.CraftPlayer;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 public class InternalBridgeImpl implements InternalBridge {
     @Override

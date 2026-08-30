@@ -1,13 +1,13 @@
 package net.nuggetmc.tplus.api.agent.legacyagent;
 
-import org.bukkit.Axis;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.Waterlogged;
-import org.bukkit.block.data.Bisected.Half;
-import org.bukkit.block.data.type.*;
+import net.nuggetmc.tplus.compat.bukkit.Axis;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.BlockFace;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Bisected;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Waterlogged;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Bisected.Half;
+import net.nuggetmc.tplus.compat.bukkit.block.data.type.*;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;

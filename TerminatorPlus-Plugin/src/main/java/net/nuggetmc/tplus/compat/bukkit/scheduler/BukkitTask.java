@@ -1,0 +1,2 @@
+package net.nuggetmc.tplus.compat.bukkit.scheduler;
+public class BukkitTask { private final int id; private final java.util.concurrent.ScheduledFuture<?> future; BukkitTask(int id,java.util.concurrent.ScheduledFuture<?> future){this.id=id;this.future=future;} public int getTaskId(){return id;} public boolean isCancelled(){return future.isCancelled()||future.isDone();} public void cancel(){future.cancel(false);} }

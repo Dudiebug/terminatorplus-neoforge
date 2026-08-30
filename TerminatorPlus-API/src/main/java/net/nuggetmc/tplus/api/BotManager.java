@@ -2,9 +2,9 @@ package net.nuggetmc.tplus.api;
 
 import net.nuggetmc.tplus.api.agent.Agent;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.NeuralNetwork;
-import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Set;

@@ -5,9 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.GameMode;
+import net.nuggetmc.tplus.compat.bukkit.Location;
 
 import net.nuggetmc.tplus.api.agent.legacyagent.LegacyMats;
 

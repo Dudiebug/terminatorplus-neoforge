@@ -3,14 +3,14 @@ package net.nuggetmc.tplus.api.agent.legacyagent;
 import net.nuggetmc.tplus.api.Terminator;
 import net.nuggetmc.tplus.api.utils.BotUtils;
 
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.*;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.BlockFace;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
 
 import com.google.common.base.Optional;
 

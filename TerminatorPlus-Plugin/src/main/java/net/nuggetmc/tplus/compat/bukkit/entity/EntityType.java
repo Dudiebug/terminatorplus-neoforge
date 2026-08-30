@@ -1,0 +1,6 @@
+package net.nuggetmc.tplus.compat.bukkit.entity;
+import net.minecraft.core.registries.BuiltInRegistries; import net.minecraft.resources.ResourceLocation;
+public enum EntityType { PLAYER,ZOMBIE,SKELETON,CREEPER,SPIDER,ENDERMAN,VEX,ARMOR_STAND,ARROW,TRIDENT,ENDER_PEARL,ENDER_CRYSTAL,FIREWORK,THROWN_EXP_BOTTLE,THROWN_POTION,WIND_CHARGE,OAK_BOAT,UNKNOWN;
+    public static EntityType fromName(String name){if(name==null)return null;try{return valueOf(name.toUpperCase(java.util.Locale.ROOT));}catch(Exception e){return UNKNOWN;}}
+    public static EntityType fromNms(net.minecraft.world.entity.Entity e){return switch(e){case net.minecraft.server.level.ServerPlayer ignored->PLAYER;case net.minecraft.world.entity.monster.Zombie ignored->ZOMBIE;case net.minecraft.world.entity.monster.Skeleton ignored->SKELETON;case net.minecraft.world.entity.monster.Creeper ignored->CREEPER;case net.minecraft.world.entity.monster.Spider ignored->SPIDER;case net.minecraft.world.entity.monster.EnderMan ignored->ENDERMAN;case net.minecraft.world.entity.monster.Vex ignored->VEX;case net.minecraft.world.entity.decoration.ArmorStand ignored->ARMOR_STAND;case net.minecraft.world.entity.projectile.Arrow ignored->ARROW;case net.minecraft.world.entity.projectile.ThrownTrident ignored->TRIDENT;default->UNKNOWN;};}
+}

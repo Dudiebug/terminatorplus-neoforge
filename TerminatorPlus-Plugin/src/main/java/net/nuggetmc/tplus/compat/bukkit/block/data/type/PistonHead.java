@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bukkit.block.data.type; public class PistonHead extends net.nuggetmc.tplus.compat.bukkit.block.data.BlockData { public net.nuggetmc.tplus.compat.bukkit.block.BlockFace getFacing(){return net.nuggetmc.tplus.compat.bukkit.block.BlockFace.UP;} }

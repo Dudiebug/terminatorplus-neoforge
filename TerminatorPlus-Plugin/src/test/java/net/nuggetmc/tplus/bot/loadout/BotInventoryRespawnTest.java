@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.loadout;
 
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

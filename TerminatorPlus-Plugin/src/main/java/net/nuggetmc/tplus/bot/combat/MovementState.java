@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.combat;
 
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * MovementNetwork -> CombatDirector contract. Reports physical movement facts;

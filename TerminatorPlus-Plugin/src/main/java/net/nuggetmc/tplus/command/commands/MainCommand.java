@@ -1,18 +1,18 @@
 package net.nuggetmc.tplus.command.commands;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.hover.content.Text;
+import net.nuggetmc.tplus.compat.bungee.chat.BaseComponent;
+import net.nuggetmc.tplus.compat.bungee.chat.ClickEvent;
+import net.nuggetmc.tplus.compat.bungee.chat.ComponentBuilder;
+import net.nuggetmc.tplus.compat.bungee.chat.HoverEvent;
+import net.nuggetmc.tplus.compat.bungee.chat.hover.content.Text;
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.api.utils.ChatUtils;
 import net.nuggetmc.tplus.command.CommandHandler;
 import net.nuggetmc.tplus.command.CommandInstance;
 import net.nuggetmc.tplus.command.annotation.Command;
 import net.nuggetmc.tplus.utils.MCLogs;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 
 import java.io.IOException;
 

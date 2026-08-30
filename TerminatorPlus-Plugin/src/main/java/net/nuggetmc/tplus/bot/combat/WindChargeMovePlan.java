@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.combat;
 
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Cached plan for a wind-charge self-propulsion throw. Calculated once when the bot

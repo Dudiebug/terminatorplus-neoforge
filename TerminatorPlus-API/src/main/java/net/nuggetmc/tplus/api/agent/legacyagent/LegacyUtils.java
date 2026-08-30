@@ -1,9 +1,9 @@
 package net.nuggetmc.tplus.api.agent.legacyagent;
 
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Sound;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 public class LegacyUtils {
 
@@ -16,7 +16,7 @@ public class LegacyUtils {
         double j = Math.floor(v.length() * n);
         v.multiply(m / v.length());
 
-        org.bukkit.World world = a.getWorld();
+        net.nuggetmc.tplus.compat.bukkit.World world = a.getWorld();
         if (world == null) return false;
 
         for (int i = 0; i <= j; i++) {

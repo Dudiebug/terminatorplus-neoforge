@@ -1,9 +1,9 @@
 package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 
 /**
  * Central owner for player-like primary action state. The first migration step

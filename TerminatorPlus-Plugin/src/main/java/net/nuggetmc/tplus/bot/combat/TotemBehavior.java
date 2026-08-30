@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.bot.combat;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
 
 /**
  * Passive clutch swap: when the bot drops low on health and has a totem

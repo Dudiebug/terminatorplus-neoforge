@@ -1,10 +1,10 @@
 package net.nuggetmc.tplus.api.event;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.event.Cancellable;
+import net.nuggetmc.tplus.compat.bukkit.event.Event;
+import net.nuggetmc.tplus.compat.bukkit.event.HandlerList;
 
 public class TerminatorLocateTargetEvent extends Event implements Cancellable {
 

@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bukkit.block.data.type; public class Gate extends net.nuggetmc.tplus.compat.bukkit.block.data.BlockData implements net.nuggetmc.tplus.compat.bukkit.block.data.Openable { private boolean o;public boolean isOpen(){return o;}public void setOpen(boolean v){o=v;} }

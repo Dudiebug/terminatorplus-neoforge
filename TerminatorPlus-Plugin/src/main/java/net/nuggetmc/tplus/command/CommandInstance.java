@@ -9,13 +9,13 @@ import net.nuggetmc.tplus.command.annotation.TextArg;
 import net.nuggetmc.tplus.command.exception.ArgCountException;
 import net.nuggetmc.tplus.command.exception.ArgParseException;
 import net.nuggetmc.tplus.command.exception.NonPlayerException;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.World;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.command.defaults.BukkitCommand;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -273,7 +273,7 @@ public abstract class CommandInstance extends BukkitCommand {
                 }
             });
 
-            sender.sendMessage("Command Usage: " + org.bukkit.ChatColor.YELLOW + "/" + getName() + (method.getName().isEmpty() ? "" : " " + method.getName())
+            sender.sendMessage("Command Usage: " + net.nuggetmc.tplus.compat.bukkit.ChatColor.YELLOW + "/" + getName() + (method.getName().isEmpty() ? "" : " " + method.getName())
                     + " " + String.join(" ", usageArgs));
             return true;
         }

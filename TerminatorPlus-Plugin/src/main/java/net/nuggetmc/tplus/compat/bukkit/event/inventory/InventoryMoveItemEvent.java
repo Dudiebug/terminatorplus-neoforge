@@ -1,0 +1,3 @@
+package net.nuggetmc.tplus.compat.bukkit.event.inventory;
+import net.nuggetmc.tplus.compat.bukkit.event.*; import net.nuggetmc.tplus.compat.bukkit.inventory.Inventory;
+public class InventoryMoveItemEvent extends Event implements Cancellable { private final Inventory source,destination;private boolean cancelled;public InventoryMoveItemEvent(Inventory source,Inventory destination){this.source=source;this.destination=destination;}public Inventory getSource(){return source;}public Inventory getDestination(){return destination;}public boolean isCancelled(){return cancelled;}public void setCancelled(boolean v){cancelled=v;} }

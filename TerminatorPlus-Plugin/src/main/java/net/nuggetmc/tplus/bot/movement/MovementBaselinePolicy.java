@@ -5,7 +5,7 @@ import net.nuggetmc.tplus.bot.combat.CombatActionCategory;
 import net.nuggetmc.tplus.bot.combat.CombatIntent;
 import net.nuggetmc.tplus.bot.combat.MovementBranchFamily;
 import net.nuggetmc.tplus.bot.combat.MovementObjective;
-import org.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
 
 /**
  * Deterministic movement floor. It returns movement preferences only; the

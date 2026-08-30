@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.preset;
 
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 
 /**
  * Serializable snapshot of a bot's loadout and combat behavior settings.

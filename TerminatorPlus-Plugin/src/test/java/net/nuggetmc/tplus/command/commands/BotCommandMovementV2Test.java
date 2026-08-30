@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.command.commands;
 
 import net.nuggetmc.tplus.command.annotation.Require;
-import org.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

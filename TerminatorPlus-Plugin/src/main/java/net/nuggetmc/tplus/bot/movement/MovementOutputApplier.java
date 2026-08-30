@@ -8,10 +8,10 @@ import net.nuggetmc.tplus.bot.combat.BotActionState;
 import net.nuggetmc.tplus.bot.combat.CombatDebugger;
 import net.nuggetmc.tplus.bot.combat.CombatIntent;
 import net.nuggetmc.tplus.bot.combat.MovementState;
-import org.bukkit.Location;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.configuration.Configuration;
+import net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.util.Map;
 import java.util.UUID;

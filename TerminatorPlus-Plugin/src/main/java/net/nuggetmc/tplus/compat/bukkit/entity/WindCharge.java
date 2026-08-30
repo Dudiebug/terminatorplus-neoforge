@@ -1,0 +1,2 @@
+package net.nuggetmc.tplus.compat.bukkit.entity;
+public class WindCharge extends Entity { public WindCharge(net.minecraft.world.entity.Entity e){super(e);} private Object shooter;public void setShooter(Object s){shooter=s;}public Object getShooter(){return shooter;} }

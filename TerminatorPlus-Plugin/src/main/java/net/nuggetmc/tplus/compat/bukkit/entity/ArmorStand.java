@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bukkit.entity; public class ArmorStand extends Entity { public ArmorStand(net.minecraft.world.entity.Entity e){super(e);} public void setVisible(boolean v){} public void setSmall(boolean v){} public void setGravity(boolean v){} public void addPassenger(Entity e){handle.startRiding(e.getHandle(),true);} }

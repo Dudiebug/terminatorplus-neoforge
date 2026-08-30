@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.api.event;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 
 public class BotKilledByPlayerEvent {
 

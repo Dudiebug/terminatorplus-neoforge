@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api.agent.legacyagent;
 
-import org.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.Material;
 
 public class LegacyItems {
     public static final Material SHOVEL = Material.IRON_SHOVEL;

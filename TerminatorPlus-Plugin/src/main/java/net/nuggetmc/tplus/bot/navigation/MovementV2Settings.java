@@ -2,7 +2,7 @@ package net.nuggetmc.tplus.bot.navigation;
 
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.configuration.Configuration;
+import net.nuggetmc.tplus.compat.bukkit.configuration.Configuration;
 
 /** Runtime feature gate shared by commands, UI, and bots. */
 public final class MovementV2Settings {

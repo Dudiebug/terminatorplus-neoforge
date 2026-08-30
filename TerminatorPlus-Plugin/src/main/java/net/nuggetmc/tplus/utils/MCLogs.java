@@ -3,7 +3,7 @@ package net.nuggetmc.tplus.utils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.nuggetmc.tplus.TerminatorPlus;
-import org.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
 
 import java.io.BufferedReader;
 import java.io.IOException;

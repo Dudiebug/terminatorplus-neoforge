@@ -5,11 +5,11 @@ import net.nuggetmc.tplus.api.Terminator;
 import net.nuggetmc.tplus.api.agent.Agent;
 import net.nuggetmc.tplus.api.utils.MathUtils;
 import net.nuggetmc.tplus.api.utils.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.util.Set;
 

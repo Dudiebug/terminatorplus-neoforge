@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bungee.chat; public class BaseComponent { protected String text=""; public BaseComponent(){} public BaseComponent(String text){this.text=text;} @Override public String toString(){return text==null?"":text;} }

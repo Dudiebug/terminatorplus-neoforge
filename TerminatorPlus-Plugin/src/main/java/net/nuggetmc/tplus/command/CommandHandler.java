@@ -10,8 +10,8 @@ import net.nuggetmc.tplus.command.commands.AICommand;
 import net.nuggetmc.tplus.command.commands.BotCommand;
 import net.nuggetmc.tplus.command.commands.BotEnvironmentCommand;
 import net.nuggetmc.tplus.command.commands.MainCommand;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class CommandHandler {
         for (CommandInstance command : commands) {
             commandMap.put(command.getName(), command);
 
-            org.bukkit.command.PluginCommand pluginCmd = plugin.getCommand(command.getName());
+            net.nuggetmc.tplus.compat.bukkit.command.PluginCommand pluginCmd = plugin.getCommand(command.getName());
             if (pluginCmd != null) {
                 pluginCmd.setExecutor((sender, cmd, label, args) -> command.execute(sender, label, args));
                 pluginCmd.setTabCompleter((sender, cmd, label, args) -> command.tabComplete(sender, label, args));

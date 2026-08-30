@@ -1,0 +1,1 @@
+package net.nuggetmc.tplus.compat.bungee.chat; public class HoverEvent { public enum Action{SHOW_TEXT,SHOW_ITEM,SHOW_ENTITY} private final Action action;private final Object value;public HoverEvent(Action a,Object v){action=a;value=v;} }

@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.api.agent.botagent;
 
 import net.nuggetmc.tplus.api.Terminator;
-import org.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Location;
 
 public class BotSituation {
 

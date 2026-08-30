@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api.agent.legacyagent;
 
-import org.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.Location;
 
 public enum LegacyLevel {
     ABOVE(0, 2, 0),

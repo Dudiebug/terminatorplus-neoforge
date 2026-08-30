@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api.utils;
 
-import org.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 
 public class ItemUtils {
 

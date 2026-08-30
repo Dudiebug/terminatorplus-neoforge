@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.command.commands;
 
 import org.junit.jupiter.api.Test;
-import org.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.Material;
 
 import java.util.List;
 

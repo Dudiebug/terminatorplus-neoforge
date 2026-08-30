@@ -1,7 +1,7 @@
 package net.nuggetmc.tplus.bot.gui;
 
-import org.bukkit.Material;
-import org.bukkit.event.inventory.ClickType;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.event.inventory.ClickType;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -45,9 +45,9 @@ class BotInventoryGUITest {
         assertFalse(BotInventoryGUI.isValidMaterialForSlot(39, Material.SHIELD));
         assertTrue(BotInventoryGUI.isValidMaterialForSlot(40, Material.SHIELD));
 
-        assertTrue(BotInventoryGUI.validationError(new org.bukkit.inventory.ItemStack[36])
+        assertTrue(BotInventoryGUI.validationError(new net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[36])
                 .contains("incomplete"));
-        org.bukkit.inventory.ItemStack[] contents = new org.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
+        net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[] contents = new net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
         contents[36] = null;
         assertNull(BotInventoryGUI.validationError(contents));
         contents[36] = null;
@@ -56,9 +56,9 @@ class BotInventoryGUITest {
 
     @Test
     void editStateTracksTheOriginalSnapshotAndSelectedSlot() {
-        org.bukkit.inventory.ItemStack[] original = new org.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
+        net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[] original = new net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
         BotInventoryGUI.EditState state = new BotInventoryGUI.EditState(original, 4);
-        org.bukkit.inventory.ItemStack[] changed = new org.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
+        net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[] changed = new net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack[BotInventoryGUI.EDITABLE_SLOTS];
         assertFalse(state.changed(changed));
         assertEquals(4, state.selectedHotbarSlot());
     }

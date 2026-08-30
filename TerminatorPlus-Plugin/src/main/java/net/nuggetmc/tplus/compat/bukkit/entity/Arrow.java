@@ -1,0 +1,3 @@
+package net.nuggetmc.tplus.compat.bukkit.entity;
+import net.nuggetmc.tplus.compat.bukkit.potion.PotionType;
+public class Arrow extends Entity { public Arrow(net.minecraft.world.entity.Entity e){super(e);} private Object shooter; private boolean critical; private int pierce; private PotionType potion; public void setShooter(Object s){shooter=s;}public Object getShooter(){return shooter;}public void setCritical(boolean v){critical=v;}public boolean isCritical(){return critical;}public void setPierceLevel(int v){pierce=v;}public int getPierceLevel(){return pierce;}public void setBasePotionType(PotionType t){potion=t;}public PotionType getBasePotionType(){return potion;} }

@@ -1,8 +1,8 @@
 package net.nuggetmc.tplus.api.utils;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.permissions.ServerOperator;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.permissions.ServerOperator;
 
 import java.util.Arrays;
 

@@ -1,16 +1,16 @@
 package net.nuggetmc.tplus.bot.gui;
 
 import net.nuggetmc.tplus.bot.Bot;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.ChatColor;
+import net.nuggetmc.tplus.compat.bukkit.Material;
+import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+import net.nuggetmc.tplus.compat.bukkit.inventory.EquipmentSlot;
+import net.nuggetmc.tplus.compat.bukkit.inventory.Inventory;
+import net.nuggetmc.tplus.compat.bukkit.inventory.InventoryHolder;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.PlayerInventory;
+import net.nuggetmc.tplus.compat.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 import java.util.UUID;

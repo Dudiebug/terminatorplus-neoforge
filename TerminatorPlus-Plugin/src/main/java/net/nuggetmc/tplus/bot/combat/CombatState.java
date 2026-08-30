@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.bot.combat;
 
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 /**
  * Scratch-pad for multi-tick weapon behaviors (trident run-up, mace

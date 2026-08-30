@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.api.agent.legacyagent.ai;
 
-import net.md_5.bungee.api.ChatColor;
+import net.nuggetmc.tplus.compat.bungee.ChatColor;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.MovementBrainBank;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.MovementNetwork;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.MovementNetworkGenetics;

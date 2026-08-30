@@ -1,0 +1,3 @@
+package net.nuggetmc.tplus.compat.bukkit.event.player;
+import net.nuggetmc.tplus.compat.bukkit.event.*; import net.nuggetmc.tplus.compat.bukkit.entity.Player;
+public class AsyncPlayerChatEvent extends Event implements Cancellable { private final Player player;private final String message;private boolean cancelled;public AsyncPlayerChatEvent(Player p,String m){player=p;message=m;}public Player getPlayer(){return player;}public String getMessage(){return message;}public boolean isCancelled(){return cancelled;}public void setCancelled(boolean v){cancelled=v;}@Override public boolean isAsynchronous(){return true;} }

@@ -14,9 +14,9 @@ import net.nuggetmc.tplus.bot.preset.PresetManager;
 import net.nuggetmc.tplus.bridge.InternalBridgeImpl;
 import net.nuggetmc.tplus.command.CommandHandler;
 import net.nuggetmc.tplus.utils.Debugger;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.nuggetmc.tplus.compat.bukkit.Bukkit;
+import net.nuggetmc.tplus.compat.bukkit.event.Listener;
+import net.nuggetmc.tplus.compat.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 

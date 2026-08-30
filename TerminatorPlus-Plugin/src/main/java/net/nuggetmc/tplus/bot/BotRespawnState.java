@@ -2,11 +2,11 @@ package net.nuggetmc.tplus.bot;
 
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.NeuralNetwork;
 import net.nuggetmc.tplus.api.utils.SkinData;
-import org.bukkit.Particle;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import net.nuggetmc.tplus.compat.bukkit.Particle;
+import net.nuggetmc.tplus.compat.bukkit.Location;
+import net.nuggetmc.tplus.compat.bukkit.World;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 

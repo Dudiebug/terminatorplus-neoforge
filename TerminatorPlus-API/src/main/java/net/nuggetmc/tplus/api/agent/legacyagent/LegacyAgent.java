@@ -15,18 +15,18 @@ import net.nuggetmc.tplus.api.event.TerminatorLocateTargetEvent;
 import net.nuggetmc.tplus.api.utils.BotUtils;
 import net.nuggetmc.tplus.api.utils.MathUtils;
 import net.nuggetmc.tplus.api.utils.PlayerUtils;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Waterlogged;
-import org.bukkit.block.data.type.Door;
-import org.bukkit.block.data.type.TrapDoor;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.Vector;
+import net.nuggetmc.tplus.compat.bukkit.*;
+import net.nuggetmc.tplus.compat.bukkit.block.Block;
+import net.nuggetmc.tplus.compat.bukkit.block.BlockFace;
+import net.nuggetmc.tplus.compat.bukkit.block.data.Waterlogged;
+import net.nuggetmc.tplus.compat.bukkit.block.data.type.Door;
+import net.nuggetmc.tplus.compat.bukkit.block.data.type.TrapDoor;
+import net.nuggetmc.tplus.compat.bukkit.entity.*;
+import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
+import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
+import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitRunnable;
+import net.nuggetmc.tplus.compat.bukkit.util.BoundingBox;
+import net.nuggetmc.tplus.compat.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -453,7 +453,7 @@ public class LegacyAgent extends Agent {
                 : Material.WATER_BUCKET;
 
         LivingEntity le = bot.getBukkitEntity();
-        if (le instanceof org.bukkit.entity.Player p) {
+        if (le instanceof net.nuggetmc.tplus.compat.bukkit.entity.Player p) {
             ItemStack held = p.getInventory().getItemInMainHand();
             if (held != null) {
                 Material heldType = held.getType();
