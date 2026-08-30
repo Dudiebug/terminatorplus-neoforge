@@ -59,6 +59,15 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
+
+    // Run the JUnit suite in the same transformed Minecraft/NeoForge
+    // classpath used by the game runs.  The preserved Paper tests exercise
+    // native ServerPlayer and registry classes, so a plain JVM test classpath
+    // would fail before any assertion is reached.
+    unitTest {
+        enable()
+        testedMod = mods.terminatorplus
+    }
 }
 
 dependencies {
