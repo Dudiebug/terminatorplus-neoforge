@@ -1,6 +1,13 @@
 package net.nuggetmc.tplus.api;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.NeuralNetwork;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.CombatTrainingSnapshot;
 import net.nuggetmc.tplus.api.agent.legacyagent.ai.movement.MovementTrainingSnapshot;
@@ -20,6 +27,44 @@ import java.util.List;
 import java.util.UUID;
 
 public interface Terminator {
+
+    /** Native packet-backed player represented by this bot. */
+    default ServerPlayer getServerPlayer() {
+        throw new UnsupportedOperationException("This Terminator has no native player handle");
+    }
+
+    /** Alias retained for integrations that call the underlying handle directly. */
+    default ServerPlayer getHandle() {
+        return getServerPlayer();
+    }
+
+    default ServerLevel getServerLevel() {
+        return getServerPlayer().serverLevel();
+    }
+
+    default Vec3 getNativePosition() {
+        return getServerPlayer().position();
+    }
+
+    default Vec3 getNativeVelocity() {
+        return getServerPlayer().getDeltaMovement();
+    }
+
+    default void setNativeVelocity(Vec3 velocity) {
+        getServerPlayer().setDeltaMovement(velocity == null ? Vec3.ZERO : velocity);
+    }
+
+    default AABB getNativeBounds() {
+        return getServerPlayer().getBoundingBox();
+    }
+
+    default Inventory getNativeInventory() {
+        return getServerPlayer().getInventory();
+    }
+
+    default ResourceKey<Level> getNativeDimension() {
+        return getServerPlayer().level().dimension();
+    }
 
     String getBotName();
 

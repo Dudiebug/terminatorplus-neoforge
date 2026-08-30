@@ -73,6 +73,7 @@ public final class TerminatorPlus implements Plugin {
 
     public TerminatorPlus(IEventBus modBus) {
         instance = this;
+        NeoForgePermissions.install();
         // NeoForge's mod bus is for construction-time events. Gameplay events
         // are all delivered on the global server bus.
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);

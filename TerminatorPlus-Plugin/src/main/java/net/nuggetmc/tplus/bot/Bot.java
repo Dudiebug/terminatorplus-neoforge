@@ -167,6 +167,48 @@ public class Bot extends ServerPlayer implements Terminator {
 
     }
 
+    @Override
+    public ServerPlayer getServerPlayer() {
+        return this;
+    }
+
+    @Override
+    public ServerLevel getServerLevel() {
+        return serverLevel();
+    }
+
+    @Override
+    public Vec3 getNativePosition() {
+        return position();
+    }
+
+    @Override
+    public Vec3 getNativeVelocity() {
+        return new Vec3(velocity.getX(), velocity.getY(), velocity.getZ());
+    }
+
+    @Override
+    public void setNativeVelocity(Vec3 value) {
+        Vec3 safe = value == null ? Vec3.ZERO : value;
+        velocity = new Vector(safe.x, safe.y, safe.z);
+        setDeltaMovement(safe);
+    }
+
+    @Override
+    public AABB getNativeBounds() {
+        return getBoundingBox();
+    }
+
+    @Override
+    public net.minecraft.world.entity.player.Inventory getNativeInventory() {
+        return getInventory();
+    }
+
+    @Override
+    public net.minecraft.resources.ResourceKey<Level> getNativeDimension() {
+        return level().dimension();
+    }
+
     /** Legacy facade used by the preserved AI code; native callers should use this Bot directly. */
     @Override
     public Player getBukkitEntity() {
@@ -899,6 +941,7 @@ public class Bot extends ServerPlayer implements Terminator {
         if (groundTicks != 0 && noFallTicks == 0 && !(oldVelocity.getY() >= -0.8)) {
             BotFallDamageEvent event = new BotFallDamageEvent(this, new ArrayList<>(getStandingOn()));
 
+            Bukkit.getServer().getPluginManager().callEvent(event);
             plugin.getManager().getAgent().onFallDamage(event);
 
             if (!event.isCancelled()) {
@@ -1557,6 +1600,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
             BotDamageByPlayerEvent event = new BotDamageByPlayerEvent(this, killer, f);
 
+            Bukkit.getServer().getPluginManager().callEvent(event);
             agent.onPlayerDamage(event);
 
             if (event.isCancelled()) {
@@ -1603,7 +1647,9 @@ public class Bot extends ServerPlayer implements Terminator {
 
         if (damaged && attacker != null) {
             if (playerInstance && !isAlive()) {
-                agent.onBotKilledByPlayer(new BotKilledByPlayerEvent(this, killer));
+                BotKilledByPlayerEvent killedEvent = new BotKilledByPlayerEvent(this, killer);
+                Bukkit.getServer().getPluginManager().callEvent(killedEvent);
+                agent.onBotKilledByPlayer(killedEvent);
 
             } else {
                 kb(getLocation(), EntityBridge.wrap(attacker).getLocation(), attacker);

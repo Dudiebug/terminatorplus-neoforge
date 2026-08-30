@@ -1,6 +1,8 @@
 package net.nuggetmc.tplus.bot;
 
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.Vec3;
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.api.BotManager;
 import net.nuggetmc.tplus.api.Terminator;
@@ -47,6 +49,15 @@ public class BotManagerImpl implements BotManager, Listener {
         this.agent = new LegacyAgent(this, TerminatorPlus.getInstance());
         this.bots = ConcurrentHashMap.newKeySet();
         this.numberFormat = NumberFormat.getInstance(Locale.US);
+    }
+
+    @Override
+    public Terminator createBot(ServerLevel level, Vec3 position, float yaw, float pitch,
+                                 String name, SkinData skin) {
+        Objects.requireNonNull(level, "level");
+        Vec3 safePosition = position == null ? Vec3.atCenterOf(level.getSharedSpawnPos()) : position;
+        Location location = new Location(new World(level), safePosition.x, safePosition.y, safePosition.z, yaw, pitch);
+        return Bot.createBot(location, name, skin);
     }
 
     @Override

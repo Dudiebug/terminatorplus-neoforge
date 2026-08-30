@@ -1,6 +1,14 @@
 package net.nuggetmc.tplus.command;
 
 import com.google.common.collect.Sets;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.commands.CommandSourceStack;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.api.utils.ChatUtils;
 import net.nuggetmc.tplus.api.utils.DebugLogUtils;
@@ -102,6 +110,73 @@ public class CommandHandler {
     public CommandInstance getCommand(String name) {
         return commandMap.get(name);
     }
+
+    /**
+     * Register the complete legacy command surface with Brigadier.  A greedy
+     * argument node intentionally delegates token parsing to the existing
+     * reflective command implementation, preserving every alias, optional
+     * argument, text argument, and tab-completion provider without maintaining
+     * a second divergent command grammar.
+     */
+    public void registerBrigadier(RegisterCommandsEvent event) {
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        commandMap.forEach((name, command) -> {
+            registerLiteral(dispatcher, name, command);
+            for (String alias : command.getAliases()) registerLiteral(dispatcher, alias, command);
+        });
+    }
+
+    private void registerLiteral(CommandDispatcher<CommandSourceStack> dispatcher, String name, CommandInstance command) {
+        LiteralArgumentBuilder<CommandSourceStack> root = LiteralArgumentBuilder.<CommandSourceStack>literal(name)
+                .requires(source -> new NeoForgeCommandSender(source).hasPermission("terminatorplus.manage"))
+                .executes(context -> executeBrigadier(command, context, ""));
+        root.then(com.mojang.brigadier.builder.RequiredArgumentBuilder.<CommandSourceStack, String>argument(
+                        "arguments", StringArgumentType.greedyString())
+                .suggests((context, builder) -> suggestBrigadier(command, context, builder))
+                .executes(context -> executeBrigadier(command, context,
+                        StringArgumentType.getString(context, "arguments"))));
+        dispatcher.register(root);
+    }
+
+    private int executeBrigadier(CommandInstance command, CommandContext<CommandSourceStack> context, String rawArguments) {
+        CommandSender sender = new NeoForgeCommandSender(context.getSource());
+        String[] tail = tokenize(rawArguments);
+        return command.execute(sender, command.getName(), tail) ? 1 : 0;
+    }
+
+    private java.util.concurrent.CompletableFuture<Suggestions> suggestBrigadier(
+            CommandInstance command, CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
+        String raw = builder.getRemaining();
+        String[] tail = tokenize(raw);
+        if (tail.length == 0) tail = new String[]{""};
+        CommandSender sender = new NeoForgeCommandSender(context.getSource());
+        for (String suggestion : command.tabComplete(sender, command.getName(), tail)) builder.suggest(suggestion);
+        return builder.buildFuture();
+    }
+
+    /** Shell-like tokenization for the greedy Brigadier tail. */
+    static String[] tokenize(String raw) {
+        if (raw == null || raw.isBlank()) return new String[0];
+        List<String> result = new ArrayList<>();
+        StringBuilder token = new StringBuilder();
+        boolean quoted = false;
+        char quote = 0;
+        for (int i = 0; i < raw.length(); i++) {
+            char ch = raw.charAt(i);
+            if ((ch == '\'' || ch == '"')) {
+                if (quoted && ch == quote) quoted = false;
+                else if (!quoted) { quoted = true; quote = ch; }
+                else token.append(ch);
+            } else if (Character.isWhitespace(ch) && !quoted) {
+                if (token.length() > 0) { result.add(token.toString()); token.setLength(0); }
+            } else {
+                token.append(ch);
+            }
+        }
+        if (token.length() > 0 || raw.endsWith(" ")) result.add(token.toString());
+        return result.toArray(String[]::new);
+    }
+
 
     public void sendRootInfo(CommandInstance commandInstance, CommandSender sender) {
         sender.sendMessage(ChatUtils.LINE);

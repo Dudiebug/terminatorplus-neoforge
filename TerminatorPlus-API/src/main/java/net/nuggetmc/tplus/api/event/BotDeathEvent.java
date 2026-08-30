@@ -2,6 +2,8 @@ package net.nuggetmc.tplus.api.event;
 
 import net.nuggetmc.tplus.api.Terminator;
 import net.nuggetmc.tplus.compat.bukkit.event.entity.EntityDeathEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 
 public class BotDeathEvent extends EntityDeathEvent {
 
@@ -14,5 +16,13 @@ public class BotDeathEvent extends EntityDeathEvent {
 
     public Terminator getBot() {
         return bot;
+    }
+
+    public ServerPlayer getServerPlayer() {
+        return bot == null ? null : bot.getServerPlayer();
+    }
+
+    public DamageSource getNativeDamageSource() {
+        return getDamageSource() instanceof DamageSource source ? source : null;
     }
 }
