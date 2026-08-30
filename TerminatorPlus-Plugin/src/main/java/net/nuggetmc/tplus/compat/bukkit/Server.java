@@ -15,10 +15,12 @@ import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
 
 public class Server {
     private static volatile MinecraftServer handle;
+    private static volatile Thread serverThread;
     private static final PluginManager PLUGIN_MANAGER = new PluginManager();
     protected Server() { }
     public static Server instance() { return new Server(); }
-    public static void bind(MinecraftServer server) { handle = server; }
+    public static void bind(MinecraftServer server) { handle = server; serverThread = Thread.currentThread(); }
+    public boolean isPrimaryThread() { return Thread.currentThread() == serverThread; }
     public MinecraftServer getHandle() { return handle; }
     public String getMinecraftVersion() { return "1.21.1"; }
     public String getVersion() { return "NeoForge 21.1.249 (Minecraft 1.21.1)"; }

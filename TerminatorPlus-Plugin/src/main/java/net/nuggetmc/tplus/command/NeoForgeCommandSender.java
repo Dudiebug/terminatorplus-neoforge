@@ -3,6 +3,7 @@ package net.nuggetmc.tplus.command;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.nuggetmc.tplus.NeoForgePermissions;
 import net.nuggetmc.tplus.compat.bukkit.command.CommandSender;
 import net.nuggetmc.tplus.compat.bukkit.entity.EntityBridge;
 import net.nuggetmc.tplus.compat.bukkit.entity.Player;

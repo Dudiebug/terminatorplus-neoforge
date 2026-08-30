@@ -15,7 +15,7 @@ public final class Bukkit {
     public static Server getServer() { return server; }
     public static void bind(net.minecraft.server.MinecraftServer handle) { Server.bind(handle); server = Server.instance(); }
     public static Logger getLogger() { return server.getLogger(); }
-    public static boolean isPrimaryThread() { return getScheduler().isTickThread() || server.getHandle() == null; }
+    public static boolean isPrimaryThread() { return server.getHandle() == null || server.isPrimaryThread() || getScheduler().isTickThread(); }
     public static List<World> getWorlds() { return server.getWorlds(); }
     public static Collection<Player> getOnlinePlayers() { return server.getOnlinePlayers(); }
     public static Player getPlayer(String name) { return server.getPlayer(name); }
