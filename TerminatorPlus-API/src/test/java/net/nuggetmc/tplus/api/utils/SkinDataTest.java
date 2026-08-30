@@ -1,6 +1,5 @@
 package net.nuggetmc.tplus.api.utils;
 
-import com.destroystokyo.paper.profile.ProfileProperty;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.junit.jupiter.api.Test;
@@ -28,8 +27,8 @@ class SkinDataTest {
 
     @Test
     void extractsOnlySignedTextureProperties() {
-        ProfileProperty unsigned = new ProfileProperty("textures", "unsigned-value");
-        ProfileProperty signed = new ProfileProperty("textures", "value", "signature");
+        Property unsigned = new Property("textures", "unsigned-value");
+        Property signed = new Property("textures", "value", "signature");
 
         assertNull(MojangAPI.extractTextures(List.of(unsigned)));
         assertEquals(new SkinData("value", "signature"), MojangAPI.extractTextures(List.of(signed)));
