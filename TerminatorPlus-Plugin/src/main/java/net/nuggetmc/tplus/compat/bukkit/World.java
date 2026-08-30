@@ -27,6 +27,7 @@ public class World {
     public void playSound(Location loc,Sound sound,SoundCategory category,float volume,float pitch){playSound(loc,sound,volume,pitch);}
     public int getMinHeight(){return handle.getMinBuildHeight();} public int getMaxHeight(){return handle.getMaxBuildHeight();}
     public Block getHighestBlockAt(int x,int z){int y=handle.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z)-1;return getBlockAt(x,y,z);}
+    public int getHighestBlockYAt(int x,int z){return handle.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z)-1;}
     public Block getHighestBlockAt(int x,int z,HeightMap map){
         var type=switch(map==null?HeightMap.MOTION_BLOCKING_NO_LEAVES:map){case MOTION_BLOCKING->net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING;case OCEAN_FLOOR->net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR;case WORLD_SURFACE->net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE;default->net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;};
         return getBlockAt(x,handle.getHeight(type,x,z)-1,z);
