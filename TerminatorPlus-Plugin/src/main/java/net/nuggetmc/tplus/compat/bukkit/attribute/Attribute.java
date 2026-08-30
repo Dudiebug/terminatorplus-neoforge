@@ -7,7 +7,8 @@ public enum Attribute {
     GENERIC_ARMOR(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR),
     GENERIC_ARMOR_TOUGHNESS(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS),
     GENERIC_KNOCKBACK_RESISTANCE(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE),
-    GENERIC_FOLLOW_RANGE(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+    GENERIC_FOLLOW_RANGE(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE),
+    MAX_HEALTH(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH);
     private final net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> nms;
     Attribute(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> nms){this.nms=nms;}
     public net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> nms(){return nms;}

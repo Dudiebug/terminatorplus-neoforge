@@ -20,6 +20,7 @@ public final class PlayerInventory implements net.nuggetmc.tplus.compat.bukkit.i
     public ItemStack getBoots(){return new ItemStack(nms.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET));} public ItemStack getLeggings(){return new ItemStack(nms.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS));} public ItemStack getChestplate(){return new ItemStack(nms.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST));} public ItemStack getHelmet(){return new ItemStack(nms.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD));}
     public void setBoots(ItemStack item){setItem(36,item);} public void setLeggings(ItemStack item){setItem(37,item);} public void setChestplate(ItemStack item){setItem(38,item);} public void setHelmet(ItemStack item){setItem(39,item);}
     public void setHeldItemSlot(int slot){if(slot>=0&&slot<9)nms.selected=slot;}
+    public int getHeldItemSlot(){return nms.selected;}
     public ItemStack[] addItem(ItemStack... items){for(ItemStack item:items){int slot=firstEmpty();if(slot>=0)setItem(slot,item);}return new ItemStack[0];}
     public void removeItem(ItemStack item){for(int i=0;i<getSize();i++){if(item!=null&&item.isSimilar(getItem(i)))setItem(i,null);}}
 }
