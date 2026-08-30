@@ -25,6 +25,7 @@ public final class Bukkit {
     }
     public static CommandSender getConsoleSender() { return server.getConsoleSender(); }
     public static void dispatchCommand(CommandSender sender, String command) { server.dispatchCommand(sender, command); }
+    public static void broadcastMessage(String message) { for (Player player : getOnlinePlayers()) player.sendMessage(message); }
     public static String getVersion() { return server.getVersion(); }
     public static String getName() { return server.getName(); }
     public static double[] getTPS() { return server.getTPS(); }

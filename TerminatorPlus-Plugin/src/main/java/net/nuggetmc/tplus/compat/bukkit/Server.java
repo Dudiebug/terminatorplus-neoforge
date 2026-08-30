@@ -29,6 +29,7 @@ public class Server {
     public int getProfilePermissions(com.mojang.authlib.GameProfile profile) { return 4; }
     public CommandSender getConsoleSender() { return new CommandSender() { public void sendMessage(String message) { getLogger().info(message); } public boolean isOp() { return true; } }; }
     public void dispatchCommand(CommandSender sender, String command) { }
+    public int getSpawnRadius() { return 0; }
     public static final class PluginManager {
         public void registerEvents(Object listener, Plugin plugin) { }
         public void callEvent(net.nuggetmc.tplus.compat.bukkit.event.Event event) { }

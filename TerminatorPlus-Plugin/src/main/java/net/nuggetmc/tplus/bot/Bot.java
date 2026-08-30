@@ -65,6 +65,7 @@ import net.nuggetmc.tplus.compat.bukkit.craftbukkit.entity.CraftPlayer;
 import net.nuggetmc.tplus.compat.bukkit.craftbukkit.inventory.CraftItemStack;
 import net.nuggetmc.tplus.compat.bukkit.enchantments.Enchantment;
 import net.nuggetmc.tplus.compat.bukkit.entity.Damageable;
+import net.nuggetmc.tplus.compat.bukkit.entity.EntityBridge;
 import net.nuggetmc.tplus.compat.bukkit.entity.Player;
 import net.nuggetmc.tplus.compat.bukkit.inventory.ItemStack;
 import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitScheduler;
@@ -164,6 +165,16 @@ public class Bot extends ServerPlayer implements Terminator {
 
     }
 
+    /** Legacy facade used by the preserved AI code; native callers should use this Bot directly. */
+    @Override
+    public Player getBukkitEntity() {
+        return EntityBridge.player(this);
+    }
+
+    private static Packet<?> playerInfoPacket(ServerPlayer player, boolean listed) {
+        return new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, player);
+    }
+
     public BukkitTask scheduleBotTask(Runnable action, long delayTicks) {
         if (removalCleaned) return null;
         final BukkitTask[] taskRef = new BukkitTask[1];
@@ -206,8 +217,8 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     static Bot createBot(Location loc, String name, SkinData skin, UUID uuid, boolean addPlayerList) {
-        MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel nmsWorld = ((CraftWorld) Objects.requireNonNull(loc.getWorld())).getHandle();
+        MinecraftServer nmsServer = Objects.requireNonNull(Bukkit.getServer().getHandle(), "server");
+        ServerLevel nmsWorld = Objects.requireNonNull(loc.getWorld(), "world").getHandle();
 
         GameProfile profile = CustomGameProfile.create(uuid, ChatUtils.trim16(name), skin);
 
@@ -219,8 +230,8 @@ public class Bot extends ServerPlayer implements Terminator {
         bot.setPos(loc.getX(), loc.getY(), loc.getZ());
         bot.setRot(loc.getYaw(), loc.getPitch());
         bot.getBukkitEntity().setNoDamageTicks(0);
-        Packet<?> playerInfo = ClientboundPlayerInfoUpdatePacket.createSinglePlayerInitializing(bot, addPlayerList);
-        Bukkit.getOnlinePlayers().forEach(p -> ((CraftPlayer) p).getHandle().connection.send(playerInfo));
+        Packet<?> playerInfo = addPlayerList ? playerInfoPacket(bot, true) : null;
+        if (playerInfo != null) Bukkit.getOnlinePlayers().forEach(p -> p.getHandle().connection.send(playerInfo));
         if (addPlayerList) {
             nmsWorld.addNewPlayer(bot);
         } else {
@@ -262,7 +273,7 @@ public class Bot extends ServerPlayer implements Terminator {
         this.entityData.set(net.minecraft.world.entity.player.Player.DATA_PLAYER_MODE_CUSTOMISATION, (byte) 0x7F);
         Packet<?>[] packets = getRenderPacketsNoInfo();
         Bukkit.getOnlinePlayers().forEach(p -> {
-            ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
+            ServerGamePacketListenerImpl connection = p.getHandle().connection;
             for (Packet<?> packet : packets) connection.send(packet);
         });
     }
@@ -292,7 +303,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
     private Packet<?>[] getRenderPackets() {
         return new Packet[]{
-                ClientboundPlayerInfoUpdatePacket.createSinglePlayerInitializing(this, inPlayerList),
+                playerInfoPacket(this, inPlayerList),
                 new ClientboundSetEntityDataPacket(this.getId(), NMSUtils.getEntityData(this.entityData)),
                 new ClientboundRotateHeadPacket(this, (byte) ((this.yHeadRot * 256f) / 360f))
         };
@@ -716,7 +727,7 @@ public class Bot extends ServerPlayer implements Terminator {
     }
 
     private void sendPacket(Packet<?> packet) {
-        Bukkit.getOnlinePlayers().forEach(p -> ((CraftPlayer) p).getHandle().connection.send(packet));
+        Bukkit.getOnlinePlayers().forEach(p -> p.getHandle().connection.send(packet));
     }
 
     /** Re-advertise the selected mainhand after an NMS inventory-slot swap. */
@@ -811,8 +822,8 @@ public class Bot extends ServerPlayer implements Terminator {
     private void loadChunks() {
         Level world = level();
 
-        for (int i = chunkPosition().x() - 1; i <= chunkPosition().x() + 1; i++) {
-            for (int j = chunkPosition().z() - 1; j <= chunkPosition().z() + 1; j++) {
+        for (int i = chunkPosition().x - 1; i <= chunkPosition().x + 1; i++) {
+            for (int j = chunkPosition().z - 1; j <= chunkPosition().z + 1; j++) {
                 LevelChunk chunk = world.getChunk(i, j);
                 markChunkLoaded(chunk);
             }
@@ -1393,7 +1404,7 @@ public class Bot extends ServerPlayer implements Terminator {
         this.remove(RemovalReason.DISCARDED);
         this.removeVisually();
         if (inPlayerList) {
-            ((CraftServer) Bukkit.getServer()).getServer().getPlayerList().getPlayers().remove(this);
+            Bukkit.getServer().getHandle().getPlayerList().getPlayers().remove(this);
             inPlayerList = false;
         }
     }
@@ -1530,7 +1541,6 @@ public class Bot extends ServerPlayer implements Terminator {
         }
     }
 
-    @Override
     public boolean hurtServer(ServerLevel worldServer, DamageSource damagesource, float f) {
         Entity attacker = damagesource.getEntity();
 
@@ -1541,7 +1551,7 @@ public class Bot extends ServerPlayer implements Terminator {
         Player killer;
 
         if (playerInstance) {
-            killer = ((ServerPlayer) attacker).getBukkitEntity();
+            killer = EntityBridge.player((ServerPlayer) attacker);
 
             BotDamageByPlayerEvent event = new BotDamageByPlayerEvent(this, killer, f);
 
@@ -1562,7 +1572,7 @@ public class Bot extends ServerPlayer implements Terminator {
         }
 
         float beforeHp = getHealth();
-        boolean damaged = super.hurtServer(worldServer, damagesource, damage);
+        boolean damaged = super.hurt(damagesource, damage);
         float afterHp = getHealth();
         if (damaged) {
             double actualDamage = Math.max(0.0, beforeHp - afterHp);
@@ -1594,7 +1604,7 @@ public class Bot extends ServerPlayer implements Terminator {
                 agent.onBotKilledByPlayer(new BotKilledByPlayerEvent(this, killer));
 
             } else {
-                kb(getLocation(), attacker.getBukkitEntity().getLocation(), attacker);
+                kb(getLocation(), EntityBridge.wrap(attacker).getLocation(), attacker);
             }
         }
 
@@ -1603,7 +1613,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
     private void recordAttackerTrainingDamage(DamageSource source, Entity attacker, double amount) {
         if (!(attacker instanceof ServerPlayer player)) return;
-        Terminator terminator = plugin.getManager().getBot(player.getBukkitEntity());
+        Terminator terminator = plugin.getManager().getBot(EntityBridge.player(player));
         if (terminator instanceof Bot bot && bot != this) {
             bot.recordTrainingDamageDealt(source, attacker, amount);
         }
@@ -1641,7 +1651,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
     private TrainingDamageClassification classifyTrainingDamage(DamageSource source, Entity attacker) {
         Entity direct = source == null ? null : source.getDirectEntity();
-        String directType = direct == null ? "" : direct.getBukkitEntity().getType().name();
+        String directType = direct == null ? "" : EntityBridge.wrap(direct).getType().name();
         if (directType.contains("TRIDENT")) return trainingDamage("trident", "direct", directType, heldMaterial(attacker).name());
         if (directType.contains("CRYSTAL") || directType.contains("TNT") || directType.contains("EXPLOSIVE")) {
             return trainingDamage("explosive", "direct", directType, heldMaterial(attacker).name());
@@ -1669,7 +1679,7 @@ public class Bot extends ServerPlayer implements Terminator {
 
     private static Material heldMaterial(Entity attacker) {
         if (attacker instanceof ServerPlayer player) {
-            return player.getBukkitEntity().getInventory().getItemInMainHand().getType();
+            return EntityBridge.player(player).getInventory().getItemInMainHand().getType();
         }
         return Material.AIR;
     }
@@ -1694,9 +1704,9 @@ public class Bot extends ServerPlayer implements Terminator {
         Vector vel = loc1.toVector().subtract(loc2.toVector()).setY(0).normalize().multiply(0.3);
 
         if (isBotOnGround()) vel.multiply(0.8).setY(0.4);
-        if (attacker.getBukkitEntity() instanceof Player && ((Player) attacker.getBukkitEntity()).getInventory().getItemInMainHand().getItemMeta() != null) {
-            if (((Player) attacker.getBukkitEntity()).getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.KNOCKBACK) && attacker.getBukkitEntity() instanceof Player) {
-                int kbLevel = ((Player) attacker.getBukkitEntity()).getInventory().getItemInMainHand().getItemMeta().getEnchants().get(Enchantment.KNOCKBACK);
+        if (EntityBridge.wrap(attacker) instanceof Player attackerPlayer && attackerPlayer.getInventory().getItemInMainHand().getItemMeta() != null) {
+            if (attackerPlayer.getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.KNOCKBACK)) {
+                int kbLevel = attackerPlayer.getInventory().getItemInMainHand().getItemMeta().getEnchants().get(Enchantment.KNOCKBACK);
                 if (kbLevel == 1) {
                     vel.multiply(1.05).setY(.4);
                 } else {
@@ -1865,7 +1875,6 @@ public class Bot extends ServerPlayer implements Terminator {
         player.setSwimming(false);
     }
 
-    @Override
     public void doTick() {
         detectEquipmentUpdates();
         baseTick();
@@ -1874,6 +1883,11 @@ public class Bot extends ServerPlayer implements Terminator {
         // resulting attack-strength scale as the gate for full-damage/crit swings.
         // Without this, the scale stays pinned at 0 and no swing ever lands.
         this.attackStrengthTicker++;
+    }
+
+    private void detectEquipmentUpdates() {
+        // Native ServerPlayer synchronizes equipment during its normal tick. This
+        // no-op preserves the old Paper hook used by the ported tick routine.
     }
 
     @Override
@@ -1914,7 +1928,7 @@ public class Bot extends ServerPlayer implements Terminator {
     private static String attackerToken(Entity attacker) {
         if (attacker == null) return "none";
         try {
-            net.nuggetmc.tplus.compat.bukkit.entity.Entity bukkit = attacker.getBukkitEntity();
+            net.nuggetmc.tplus.compat.bukkit.entity.Entity bukkit = EntityBridge.wrap(attacker);
             if (bukkit == null) return attacker.getType().toString();
             return bukkit.getType().name() + ":" + safeToken(bukkit.getName());
         } catch (RuntimeException ignored) {

@@ -1,6 +1,5 @@
 package net.nuggetmc.tplus.bot;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.nuggetmc.tplus.TerminatorPlus;
 import net.nuggetmc.tplus.api.BotManager;
@@ -58,7 +57,7 @@ public class BotManagerImpl implements BotManager, Listener {
     @Override
     public void add(Terminator bot) {
         if (joinMessages) {
-            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("<yellow>" + bot.getBotName() + " joined the game"));
+            Bukkit.broadcastMessage("§e" + bot.getBotName() + " joined the game");
         }
 
         bots.add(bot);

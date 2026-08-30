@@ -131,8 +131,8 @@ public class LegacyMats {
     
     public static final Set<Material> OBSTACLES = new HashSet<>(concatTypes(Lists.newArrayList(
     	Material.IRON_BARS,
-    	Material.IRON_CHAIN,
-    	Material.COPPER_CHAIN,
+    	// 26.2's IRON_CHAIN taxonomy maps to the 1.21.1 vanilla CHAIN block.
+    	Material.CHAIN,
     	Material.END_ROD,
     	Material.LIGHTNING_ROD,
     	Material.COBWEB,
@@ -281,7 +281,7 @@ public class LegacyMats {
     
     public static boolean canPlaceWater(Block block, Optional<Double> entityYPos) {
     	if (isSolid(block.getType())) {
-    		if ((block.getType() == Material.IRON_CHAIN || block.getType() == Material.COPPER_CHAIN)
+		if (block.getType() == Material.CHAIN
     			&& ((Chain)block.getBlockData()).getAxis() == Axis.Y
     			&& !((Chain)block.getBlockData()).isWaterlogged())
     			return false;
@@ -385,8 +385,7 @@ public class LegacyMats {
     			case CACTUS:
     			case DRAGON_EGG:
     			case TURTLE_EGG:
-    			case IRON_CHAIN:
-    			case COPPER_CHAIN:
+			case CHAIN:
     			case IRON_BARS:
     			case LANTERN:
     			case SOUL_LANTERN:

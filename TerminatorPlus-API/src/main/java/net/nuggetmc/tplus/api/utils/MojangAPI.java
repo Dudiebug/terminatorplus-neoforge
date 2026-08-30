@@ -64,9 +64,9 @@ public class MojangAPI {
     static SkinData extractTextures(Collection<Property> properties) {
         if (properties == null) return null;
         for (Property property : properties) {
-            if (!"textures".equals(property.getName()) || !property.isSigned()) continue;
-            String value = property.getValue();
-            String signature = property.getSignature();
+            if (!"textures".equals(property.name()) || !property.hasSignature()) continue;
+            String value = property.value();
+            String signature = property.signature();
             if (value == null || value.isBlank() || signature == null || signature.isBlank()) continue;
             return new SkinData(value, signature);
         }
