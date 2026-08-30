@@ -41,7 +41,8 @@ public class TerminatorLocateTargetEvent extends Event implements Cancellable, I
     public net.minecraft.world.entity.LivingEntity getNativeTarget() {
         if (target == null) return null;
         if (target instanceof net.nuggetmc.tplus.compat.bukkit.entity.Player player) return player.getHandle();
-        if (target instanceof net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity entity) return entity.getHandle();
+        if (target instanceof net.nuggetmc.tplus.compat.bukkit.entity.LivingEntity entity
+                && entity.getHandle() instanceof net.minecraft.world.entity.LivingEntity living) return living;
         return null;
     }
 

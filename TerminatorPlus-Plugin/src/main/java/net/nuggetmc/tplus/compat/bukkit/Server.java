@@ -68,6 +68,11 @@ public class Server {
             }
         }
 
+        /** Native overload for public TerminatorPlus/NeoForge events. */
+        public void callEvent(net.neoforged.bus.api.Event event) {
+            if (event != null) NeoForge.EVENT_BUS.post(event);
+        }
+
         public Plugin[] getPlugins() { return new Plugin[0]; }
     }
 }

@@ -28,6 +28,7 @@ import net.nuggetmc.tplus.compat.bukkit.plugin.Plugin;
 import net.nuggetmc.tplus.compat.bukkit.plugin.PluginDescriptionFile;
 import net.nuggetmc.tplus.compat.bukkit.scheduler.BukkitScheduler;
 import net.nuggetmc.tplus.utils.Debugger;
+import net.nuggetmc.tplus.migration.PaperImporter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -135,6 +136,7 @@ public final class TerminatorPlus implements Plugin {
         correctVersion = REQUIRED_VERSION.equals(mcVersion);
         loadNativeConfig();
         MovementV2Settings.applyDefaultEnabledMigration(this);
+        PaperImporter.run(Path.of("."), configDirectory);
 
         manager = new BotManagerImpl();
         combatDirector = new CombatDirector();

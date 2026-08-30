@@ -1,6 +1,6 @@
 package net.nuggetmc.tplus.compat.bukkit.scheduler;
 
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -15,7 +15,7 @@ public final class BukkitTask {
     private volatile long nextTick;
     private final AtomicBoolean cancelled = new AtomicBoolean();
     private volatile boolean done;
-    private volatile ScheduledFuture<?> asyncFuture;
+    private volatile Future<?> asyncFuture;
 
     BukkitTask(int id, Runnable action, long nextTick, long period) {
         this.id = id;
@@ -25,7 +25,7 @@ public final class BukkitTask {
     }
 
     /** Compatibility constructor for callers compiled against the old facade. */
-    BukkitTask(int id, ScheduledFuture<?> future) {
+    BukkitTask(int id, Future<?> future) {
         this.id = id;
         this.action = null;
         this.nextTick = Long.MAX_VALUE;
@@ -38,13 +38,13 @@ public final class BukkitTask {
     }
 
     public boolean isCancelled() {
-        ScheduledFuture<?> future = asyncFuture;
+        Future<?> future = asyncFuture;
         return cancelled.get() || done || (future != null && (future.isCancelled() || future.isDone()));
     }
 
     public void cancel() {
         cancelled.set(true);
-        ScheduledFuture<?> future = asyncFuture;
+        Future<?> future = asyncFuture;
         if (future != null) future.cancel(false);
     }
 
